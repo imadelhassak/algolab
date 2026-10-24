@@ -73,7 +73,7 @@ Rename the file to `index.html`, upload it to a public repository, then go to **
 
 Une application web locale, sans serveur, pour écrire, exécuter et visualiser des algorithmes en pseudo-code français. Elle tient dans un seul fichier HTML : aucune installation, aucun serveur.
 
-🔗 **Démo en ligne :** https://YOUR-USERNAME.github.io/algolab/
+🔗 **Démo en ligne :** https://imadelhassak.github.io/algolab/
 
 Réalisée par **EL HASSAK IMAD**.
 
