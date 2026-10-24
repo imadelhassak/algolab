@@ -3,11 +3,16 @@
 <html lang="fr" data-theme="nuit">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+<meta name="theme-color" content="#1f1f1f">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="AlgoLab">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>AlgoLab – Studio d'algorithmes · par EL HASSAK IMAD</title>
 <meta name="author" content="EL HASSAK IMAD">
 <style>
-:root{--mono:ui-monospace,"Cascadia Code","JetBrains Mono",Consolas,Menlo,monospace;--ui:system-ui,-apple-system,"Segoe UI",sans-serif}
+:root{--fs:14px;--lh:21px;--mono:ui-monospace,"Cascadia Code","JetBrains Mono",Consolas,Menlo,monospace;--ui:system-ui,-apple-system,"Segoe UI",sans-serif}
 [data-theme=nuit]{--bg:#181818;--panel:#1f1f1f;--edit:#1e1e1e;--ink:#d4d4d4;--mute:#8b8b8b;--line:#333;--acc:#3794ff;--accink:#fff;--err:#f48771;--ok:#6ccb8b;--cur:#ffffff12;--errbg:#f4877126;
 --struct:#c586c0;--ctrl:#569cd6;--type:#4ec9b0;--io:#4fc1ff;--fn:#dcdcaa;--op:#d7ba7d;--bool:#ff8c69;--num:#b5cea8;--str:#ce9178;--com:#6a9955;color-scheme:dark}
 [data-theme=clair]{--bg:#eef0f3;--panel:#fff;--edit:#fff;--ink:#1f2328;--mute:#6a737d;--line:#d8dce1;--acc:#0b5fff;--accink:#fff;--err:#c62828;--ok:#1b7a43;--cur:#0b5fff14;--errbg:#c6282822;
@@ -29,13 +34,13 @@ main{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1.25fr) min
 @media(max-width:860px){main{grid-template-columns:1fr;grid-auto-rows:minmax(420px,auto)}}
 .box{background:var(--panel);border:1px solid var(--line);border-radius:8px;display:flex;flex-direction:column;min-height:0;overflow:hidden}
 .ed{flex:1;display:flex;min-height:0;background:var(--edit)}
-.gut{width:46px;overflow:hidden;border-right:1px solid var(--line);color:var(--mute);font:14px/21px var(--mono);text-align:right;user-select:none}
+.gut{width:54px;overflow:hidden;border-right:1px solid var(--line);color:var(--mute);font:var(--fs)/var(--lh) var(--mono);text-align:right;user-select:none;cursor:pointer}
 #gn{margin:0;padding:12px 8px 12px 0;font:inherit}
 .code{position:relative;flex:1;min-width:0}
 .lay{position:absolute;inset:0;overflow:hidden;pointer-events:none}
-#hl,#src{font:14px/21px var(--mono);padding:12px;margin:0;tab-size:2;white-space:pre}
+#hl,#src{font:var(--fs)/var(--lh) var(--mono);padding:12px;margin:0;tab-size:2;white-space:pre}
 #hl{position:absolute;left:0;top:0;min-width:100%;color:var(--ink)}
-#bar{position:absolute;left:0;right:0;height:21px;background:var(--cur);display:none}
+#bar{position:absolute;left:0;right:0;height:var(--lh);background:var(--cur);display:none}
 #bar.err{background:var(--errbg);box-shadow:inset 3px 0 var(--err)}
 #src{position:absolute;inset:0;width:100%;height:100%;border:0;resize:none;background:transparent;color:transparent;caret-color:var(--ink);overflow:auto;outline:0}
 #src::selection{background:#3794ff55}
@@ -74,6 +79,73 @@ dialog::backdrop{background:#0009}
 .dcard{border:1px solid var(--line);border-radius:8px;padding:8px 12px;background:var(--bg)}.dcard b{font-family:var(--mono)}.dcard p{margin:4px 0}
 .leg{display:flex;flex-wrap:wrap;gap:10px;font:13px var(--mono)}
 .db li{margin:4px 0}.db ul{padding-left:20px}
+body{height:100dvh}
+button,select,label.btn{touch-action:manipulation}
+#menu,#mnav,#sym{display:none}
+#tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+#sym{gap:6px;overflow-x:auto;padding:6px 8px;border-top:1px solid var(--line);background:var(--panel)}
+#sym button{min-width:42px;font:600 15px var(--mono);padding:6px 8px;flex:none}
+.gut span.bp{color:var(--err);font-weight:700}.gut span.bp::before{content:'● '}
+#mnav button.on:not(.p){border-color:var(--acc);color:var(--acc)}
+.tcase{border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin:8px 0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}
+#xb textarea,#xb input,#xb select{font:13px var(--mono);background:var(--edit);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+#xb textarea{width:100%}
+.row{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0;align-items:center}
+.ok{color:var(--ok)}
+#xb pre.py{font:12px/1.5 var(--mono);background:var(--edit);padding:10px;border-radius:8px;overflow:auto;white-space:pre;border:1px solid var(--line)}
+#lbox{position:relative}
+#dbar{display:flex;gap:6px;padding:6px 8px;border-bottom:1px solid var(--line);align-items:center}
+#dsel{flex:1;min-width:0}
+#dbar button{padding:5px 10px}
+#fab{display:none;position:absolute;right:12px;bottom:88px;width:54px;height:54px;border-radius:50%;background:var(--acc);color:var(--accink);border:0;font-size:22px;box-shadow:0 4px 14px #0007;z-index:5}
+.nb.hi{background:var(--op);color:#111;border-color:var(--op)}
+.arr{align-self:center;color:var(--mute);font:600 16px var(--mono)}
+@keyframes pop{from{transform:scale(.6);opacity:0}}
+.stk{display:flex;flex-direction:column-reverse;gap:4px;max-width:200px;margin:10px auto}
+.qrow{display:flex;gap:4px;overflow:auto;padding:6px 0}
+.nb{padding:8px 14px;border:1px solid var(--acc);border-radius:6px;background:var(--edit);font:600 14px var(--mono);text-align:center;flex:none}
+.nb.new{animation:pop .3s}.nb small{display:block;color:var(--mute);font:11px var(--ui)}
+.bars{display:flex;align-items:flex-end;gap:2px;height:190px;margin:10px 0}
+.bars i{flex:1;background:var(--acc);opacity:.55;border-radius:2px 2px 0 0}
+.bars i.c{background:var(--op);opacity:1}.bars i.s{background:var(--err);opacity:1}.bars i.d{background:var(--ok);opacity:1}
+.tree{overflow:auto;border:1px solid var(--line);border-radius:8px;background:var(--edit)}
+@media(max-width:860px){
+  :root{--fs:16px;--lh:24px}
+  header{padding:6px 10px}.logo small{display:none}
+  #menu{display:block}
+  #tools{display:none;width:100%;grid-template-columns:1fr 1fr;gap:6px}
+  header.open #tools{display:grid}
+  #tools #run,#tools #viz{display:none}
+  #tools select,#tools button,#tools label.btn{width:100%;text-align:center}
+  main{display:block;padding:0;flex:1;min-height:0;overflow:hidden}
+  main>.box{height:100%;border-radius:0;border-left:0;border-right:0}
+  main[data-m=edit]>#rbox,main[data-m=out]>#lbox{display:none}
+  #sym{display:flex}
+  #fab{display:block}
+  body.typing #mnav{display:none}
+  header{padding-top:calc(6px + env(safe-area-inset-top))}
+  .tabs button{flex:1;padding:10px 4px}
+  .ctl{position:sticky;top:0;z-index:2;background:var(--panel)}
+  #dbar{padding:4px 8px}
+  #mnav{display:flex;gap:6px;padding:6px 8px calc(6px + env(safe-area-inset-bottom));background:var(--panel);border-top:1px solid var(--line)}
+  #mnav button{flex:1;padding:10px 2px;font-size:13px}
+  .sb span:nth-child(2){display:none}
+  dialog{width:100vw;height:100dvh;max-width:none;max-height:none;border-radius:0;border:0}
+  .grid{grid-template-columns:1fr}.two{grid-template-columns:1fr}
+  .cell{width:40px}
+}
+@media(pointer:coarse){button,select,label.btn{min-height:40px}}
+@media print{
+  #dbar,#fab{display:none!important}
+  [data-theme]{--bg:#fff;--panel:#fff;--edit:#fff;--ink:#111;--mute:#555;--line:#ccc;--cur:transparent;--struct:#7a1fa2;--ctrl:#0000cc;--type:#1b6b80;--io:#005a9c;--fn:#6b5200;--op:#9a4d00;--bool:#b23a00;--num:#07703f;--str:#a31515;--com:#2b7a2b}
+  header,#mnav,#sym,.sb,.tabs,.ctl,#tip,#ac,.gut,#src{display:none!important}
+  body{height:auto;display:block;color:#111}main{display:block!important;padding:0}
+  main>.box{display:block!important;border:0;overflow:visible;height:auto}
+  .ed{display:block}.code{position:static}.lay{position:static;overflow:visible}#hl{position:static;transform:none!important}
+  .pane{display:none!important}#pane-console{display:block!important;overflow:visible}
+  #pane-console details{display:none}
+}
 #ac{position:fixed;z-index:10;display:none;min-width:210px;max-height:240px;overflow:auto;background:var(--panel);border:1px solid var(--acc);border-radius:8px;box-shadow:0 8px 24px #0006;font:13px var(--mono);padding:3px}
 #ac .it{display:flex;justify-content:space-between;gap:18px;padding:3px 9px;border-radius:5px;cursor:pointer}
 #ac .it.on{background:color-mix(in srgb,var(--acc) 28%,transparent)}#ac small{color:var(--mute);font-family:var(--ui)}
@@ -82,31 +154,41 @@ dialog::backdrop{background:#0009}
 <body>
 <header>
   <div class="logo"><i>&lt;/&gt;</i> AlgoLab <small>Réalisé par EL HASSAK IMAD</small></div>
+  <button id="menu" aria-label="Menu" aria-expanded="false">☰</button>
+  <div id="tools">
   <select id="theme" aria-label="Thème"><option value="nuit">Thème Nuit</option><option value="clair">Thème Clair</option><option value="dracula">Thème Dracula</option></select>
+  <select id="lang" aria-label="Langue"><option value="fr">Français</option><option value="en">English</option><option value="ar">العربية</option></select>
+  <button id="fm" title="Texte plus petit">A−</button><button id="fp" title="Texte plus grand">A+</button>
+  <select id="more" aria-label="Outils"><option value="">Outils…</option><option value="py">Traduire en Python</option><option value="tests">Jeux de tests et complexité</option><option value="flow">Organigramme</option><option value="labo">Labo : structures de données</option><option value="pdf">Exporter en PDF</option></select>
   <button id="doc">Documentation</button>
   <button id="ex">Exemple</button>
+  <button id="share" title="Copier un lien contenant ton algorithme">Partager</button>
   <button id="exp">Exporter</button>
   <label class="btn">Importer<input id="imp" type="file" accept=".alg,.txt" hidden></label>
   <button id="viz">Visualiser</button>
   <button class="p" id="run" title="Ctrl+Entrée">▶ Exécuter</button>
+</div>
 </header>
-<main>
-  <div class="box">
+<main data-m="edit">
+  <div class="box" id="lbox">
+    <div id="dbar"><select id="dsel" aria-label="Mes algorithmes"></select><button id="dnew" title="Nouvel algorithme">＋</button><button id="dren" title="Renommer">✎</button><button id="ddel" title="Supprimer">🗑</button></div>
     <div class="ed">
       <div class="gut"><pre id="gn"></pre></div>
-      <div class="code"><div class="lay"><pre id="hl"><i id="bar"></i></pre></div><textarea id="src" spellcheck="false" aria-label="Code de l'algorithme"></textarea></div>
+      <div class="code"><div class="lay"><pre id="hl"><i id="bar"></i></pre></div><textarea id="src" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" enterkeyhint="enter" aria-label="Code de l'algorithme"></textarea></div>
     </div>
+    <div id="sym" aria-label="Symboles"></div>
     <div class="sb"><span id="pos"></span><span>© EL HASSAK IMAD</span><span id="status"></span></div>
+    <button id="fab" aria-label="Exécuter">▶</button>
   </div>
-  <div class="box">
+  <div class="box" id="rbox">
     <div class="tabs"><button class="on" data-t="console">Console</button><button data-t="vars">Variables</button><button data-t="viz">Visualisation</button></div>
-    <div class="pane on" id="pane-console"><pre id="out">Appuie sur « Exécuter » (Ctrl+Entrée).
+    <div class="pane on" id="pane-console"><details style="padding:6px 12px;border-bottom:1px solid var(--line)"><summary style="cursor:pointer;color:var(--mute);font-size:13px">Entrées préparées (une valeur par ligne, lues par « lire »)</summary><textarea id="inputs" rows="3" spellcheck="false" style="width:100%;margin-top:6px;font:13px var(--mono);background:var(--edit);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px"></textarea></details><pre id="out">Appuie sur « Exécuter » (Ctrl+Entrée).
 
 AlgoLab · réalisé par EL HASSAK IMAD</pre></div>
     <div class="pane" id="pane-vars"><div class="emp">Aucune exécution.</div></div>
     <div class="pane" id="pane-viz">
       <div class="ctl">
-        <button id="b0" title="Début">⏮</button><button id="b1" title="Précédent">◀</button><button id="bp" class="p" title="Lecture / pause">▶</button><button id="b2" title="Suivant">▶|</button><button id="b3" title="Fin">⏭</button>
+        <button id="b0" title="Début">⏮</button><button id="b1" title="Précédent">◀</button><button id="bp" class="p" title="Lecture / pause">▶</button><button id="b2" title="Suivant">▶|</button><button id="b3" title="Fin">⏭</button><button id="b4" title="Prochain point d'arrêt">●▶</button>
         <input type="range" id="slider" min="0" max="0" value="0" aria-label="Étape">
         <select id="speed"><option value="900">Lent</option><option value="450" selected>Normal</option><option value="120">Rapide</option></select>
         <span id="stepinfo"></span>
@@ -115,9 +197,11 @@ AlgoLab · réalisé par EL HASSAK IMAD</pre></div>
     </div>
   </div>
 </main>
+<nav id="mnav"><button data-m="edit">✎ Éditeur</button><button id="mrun" class="p">▶ Exécuter</button><button id="mviz">◉ Visualiser</button><button data-m="out">▤ Résultats</button></nav>
 <div id="tip"></div>
 <div id="ac" role="listbox"></div>
 <dialog id="dlg"><div class="dh"><h2>Documentation d'AlgoLab <small style="font-weight:400;color:var(--mute)">· par EL HASSAK IMAD</small></h2><button id="dclose">Fermer</button></div><div class="db" id="dbody"></div></dialog>
+<dialog id="xdlg"><div class="dh"><h2 id="xt"></h2><button id="xclose">Fermer</button></div><div class="db" id="xb"></div></dialog>
 <script>
 "use strict";
 const $=id=>document.getElementById(id);
@@ -132,7 +216,7 @@ const lib={longueur:s=>String(s).length,abs:Math.abs,racine:Math.sqrt,arrondi:Ma
  sous_chaine:(s,d,l)=>String(s).substr(d-1,l),pos:(a,s)=>String(s).indexOf(a)+1,ord:c=>String(c).charCodeAt(0),chr:n=>String.fromCharCode(n)};
 
 /* ---------- Coloration ---------- */
-const KW={struct:'algorithme variable variables constante constantes debut fin',ctrl:'si alors sinon finsi tantque faire fintantque pour finpour repeter jusqua',
+const KW={struct:'algorithme variable variables constante constantes debut fin fonction procedure finfonction finprocedure type enregistrement finenregistrement',ctrl:'si alors sinon finsi tantque faire fintantque pour finpour repeter jusqua selon cas finselon retourner',
  type:'entier reel chaine caractere booleen table tableau',io:'ecrire ecrireln afficher lire',fn:Object.keys(lib).join(' '),op:'et ou non div mod',bool:'vrai faux'};
 const CLS={};for(const c in KW)KW[c].split(' ').forEach(w=>CLS[w]=c);
 function tok(line){
@@ -160,6 +244,11 @@ const D=[
 ['tantque fintantque faire','ctrl','tantque … faire','Répète tant que la condition est vraie (peut ne jamais s\'exécuter).','tantque n > 0 faire\n  n <- n - 1\nfintantque'],
 ['pour finpour de a pas','ctrl','pour … de … a … faire','Boucle avec compteur. « pas » fixe l\'incrément (négatif pour descendre).','pour i de 1 a 10 pas 2 faire\n  ecrire(i, " ")\nfinpour'],
 ['repeter jusqua','ctrl','repeter … jusqua','Répète au moins une fois, jusqu\'à ce que la condition devienne vraie.','repeter\n  lire(x)\njusqua x > 0'],
+['selon cas finselon','ctrl','selon … cas … finselon','Choix multiple : compare une valeur à plusieurs cas ; « sinon » est le cas par défaut.','selon note faire\n  cas 10, 11, 12 :\n    ecrireln("Passable")\n  sinon\n    ecrireln("Autre")\nfinselon'],
+['fonction finfonction','struct','Fonction','Sous-programme qui renvoie une valeur avec « retourner ». Il peut s\'appeler lui-même (récursivité). À placer en dehors du bloc Debut … Fin principal.','Fonction carre(x : entier) : entier\nDebut\n  retourner x * x\nFinFonction'],
+['procedure finprocedure','struct','Procedure','Sous-programme sans valeur de retour. Avec « var », le paramètre est passé par référence : la variable de l\'appelant est modifiée.','Procedure echanger(var a : entier, var b : entier)\nVariable\n  t : entier\nDebut\n  t <- a\n  a <- b\n  b <- t\nFinProcedure'],
+['retourner','ctrl','retourner valeur','Termine la fonction et renvoie la valeur (dans une procédure : simple sortie).','retourner n * fact(n - 1)'],
+['type enregistrement finenregistrement','struct','Type … Enregistrement','Définit un type structuré à plusieurs champs, accessibles par « variable.champ ». À placer avant les variables.','Type Etudiant = Enregistrement\n  nom : chaine\n  note : reel\nFinEnregistrement\n\nVariable\n  e : Etudiant\nDebut\n  e.nom <- "Ali"'],
 ['entier','type','entier','Nombre entier.','n : entier'],
 ['reel','type','reel','Nombre décimal (« réel » accepté).','prix : reel'],
 ['chaine','type','chaine','Texte entre guillemets.','nom : chaine'],
@@ -229,6 +318,62 @@ Debut
   finsi
 Fin
 `,
+'Fonctions et procédures':`Algorithme SousProgrammes
+Variable
+  x, y : entier
+
+Fonction fact(n : entier) : entier
+Debut
+  si n <= 1 alors
+    retourner 1
+  finsi
+  retourner n * fact(n - 1)
+FinFonction
+
+Procedure echanger(var a : entier, var b : entier)
+Variable
+  t : entier
+Debut
+  t <- a
+  a <- b
+  b <- t
+FinProcedure
+
+Debut
+  x <- 5
+  y <- 7
+  echanger(x, y)
+  ecrireln("x = ", x, " ; y = ", y)
+  ecrireln("5! = ", fact(5))
+  selon x faire
+    cas 7 :
+      ecrireln("x vaut 7")
+    sinon
+      ecrireln("x ne vaut pas 7")
+  finselon
+Fin
+`,
+'Enregistrement':`Algorithme Etudiants
+Type Etudiant = Enregistrement
+  nom : chaine
+  note : reel
+FinEnregistrement
+Variable
+  classe : table[1..3] de Etudiant
+  i : entier
+  somme : reel
+Debut
+  somme <- 0
+  pour i de 1 a 3 faire
+    ecrire("Nom ", i, " : ")
+    lire(classe[i].nom)
+    ecrire("Note : ")
+    lire(classe[i].note)
+    somme <- somme + classe[i].note
+  finpour
+  ecrireln("Moyenne : ", somme / 3)
+Fin
+`,
 'Factorielle':`Algorithme Factorielle
 Variable
   n, i, f : entier
@@ -281,13 +426,60 @@ function idx(p){
   }
   return p;
 }
-function transpile(src){
-  const L=src.split('\n'),out=[],names=new Set(),types={},stack=[];
-  let sec=null,ended=false,name='';STR=new Set();
+let SIGS={},RECS={};
+const recFind=b=>Object.keys(RECS).find(r=>r.toLowerCase()===b);
+const recJS=n=>'({'+RECS[n].map(f=>f.n+':'+(f.rec?recJS(f.rec):DEF[f.base])).join(',')+'})';
+function typeOfTarget(T,types){
+  const m=T.match(/^(\w+)(?:\[[^\]]*\])*((?:\.\w+)*)$/);
+  let b=((m&&types[m[1]])||'chaine').replace('table de ','');
+  if(m&&m[2])for(const f of m[2].slice(1).split('.')){const r=RECS[b]&&RECS[b].find(x=>x.n===f);if(!r)return 'chaine';b=r.rec||r.base}
+  return b;
+}
+const isDecl=l=>/^(let|const) /.test(l);
+function splitArgs(s){
+  const a=[];let d=0,q='',cur='';
+  for(const c of s){
+    if(q){cur+=c;if(c===q)q='';continue}
+    if(c==='"'||c==="'"){q=c;cur+=c;continue}
+    if(c==='('||c==='[')d++;
+    if(c===')'||c===']')d--;
+    if(c===','&&!d){a.push(cur.trim());cur=''}else cur+=c;
+  }
+  if(cur.trim()||a.length)a.push(cur.trim());
+  return a;
+}
+function parseSig(line,i){
+  const E=m=>{throw {line:i+1,msg:m}};
+  const txt=strip(line).replace(/\/\/.*$/,'').trim();
+  const mm=/^(fonction|procedure)\s+(\w+)\s*\((.*)\)\s*(?::\s*(\w+))?$/i.exec(txt);
+  if(!mm)E("Signature invalide, ex. : Fonction f(n : entier) : entier");
+  const kind=mm[1].toLowerCase(),name=mm[2],params=[];
+  if(kind==='fonction'&&!mm[4])E("Type de retour manquant, ex. : Fonction f(n : entier) : entier");
+  if(kind==='procedure'&&mm[4])E("Une procédure ne retourne pas de valeur : utilise Fonction");
+  let pend=[],ref=false;
+  for(const tk of (mm[3].trim()?mm[3].split(/[,;]/):[])){
+    let t=tk.trim();
+    if(/^var\s+/i.test(t)){ref=true;t=t.replace(/^var\s+/i,'')}
+    const c=t.indexOf(':');
+    if(c<0){if(t)pend.push(t);continue}
+    const names=[...pend,t.slice(0,c).trim()],ty=t.slice(c+1).trim().toLowerCase();
+    const tm=ty.match(/^(?:table|tableau)\s*(?:\[[^\]]*\]\s*)*de\s+(\w+)$/),table=!!tm,base=table?(ALIAS[tm[1]]||tm[1]):(ALIAS[ty]||ty);
+    if(!(base in DEF)&&!recFind(base))E(`Type inconnu : « ${ty} »`);
+    names.forEach(n=>{if(!/^[A-Za-z_]\w*$/.test(n))E(`Nom de paramètre invalide : « ${n} »`);params.push({n,base,table,ref})});
+    pend=[];ref=false;
+  }
+  if(pend.length)E(`Type manquant pour : ${pend.join(', ')}`);
+  return {kind,name,params,ret:mm[4]||null};
+}
+function compile(L,from,to,spec){
+  const out=[],names=new Set(),types={},stack=[],sw=[];
+  let sec=spec?'h':null,ended=false,name='';STR=new Set();
   const err=(i,m)=>{throw {line:i+1,msg:m}};
-  for(let i=0;i<L.length;i++){
+  const top=()=>stack[stack.length-1];
+  if(spec)spec.params.forEach(p=>{names.add(p.n);types[p.n]=p.table?'table de '+p.base:p.base;if(!p.table&&(p.base==='chaine'||p.base==='caractere'))STR.add(p.n)});
+  for(let i=from;i<to;i++){
     const o=L[i].replace(/\/\/.*$/,'').trim(); if(!o) continue;
-    const k=strip(o).toLowerCase(),ln=i+1,S=`__s(${ln},__snap);`;
+    const k=strip(o).toLowerCase(),ln=i+1,S=spec?'':`__s(${ln},__snap);`;
     const mt=re=>{const r=re.exec(k);return r&&{g:j=>o.slice(...r.indices[j]),r}};
     let m;
     if(ended) err(i,"Instruction après « Fin »");
@@ -299,17 +491,17 @@ function transpile(src){
     if(sec==='var'){
       m=mt(/^(.+?)\s*:\s*(.+)$/d); if(!m) err(i,"Déclaration attendue, ex. : a, b : entier");
       const ids=m.g(1).split(',').map(s=>s.trim());
-      ids.forEach(s=>{if(!/^[A-Za-z_]\w*$/.test(s))err(i,`Nom de variable invalide : « ${s} »`);if(names.has(s))err(i,`Variable « ${s} » déjà déclarée`)});
+      ids.forEach(s=>{if(!/^[A-Za-z_]\w*$/.test(s))err(i,`Nom de variable invalide : « ${s} »`);if(names.has(s))err(i,`Variable « ${s} » déjà déclarée`);if(SIGS[s])err(i,`« ${s} » est déjà le nom d'un sous-programme`)});
       const ty=m.g(2).trim(),tl=strip(ty).toLowerCase(),t=tl.match(/^(?:table|tableau)\s*((?:\[[^\]]+\]\s*)+)\s*de\s+(\w+)$/);
       if(t){
-        const base=ALIAS[t[2]]||t[2]; if(!(base in DEF)) err(i,`Type inconnu : « ${t[2]} »`);
+        const base=ALIAS[t[2]]||t[2],rb=base in DEF?null:recFind(base); if(!(base in DEF)&&!rb) err(i,`Type inconnu : « ${t[2]} »`);
         const dims=[...ty.matchAll(/\[\s*([^\].]+?)\s*\.\.\s*([^\]]+?)\s*\]/g)];
         if(!dims.length) err(i,"Bornes attendues, ex. : table[1..10] de entier");
         const d=dims.map(x=>`[${cx(x[1])},${cx(x[2])}]`).join(',');
-        ids.forEach(s=>{names.add(s);types[s]='table de '+base;out.push(`let ${s} = __tab([${d}], ${DEF[base]});`)});
+        ids.forEach(s=>{names.add(s);types[s]='table de '+(rb||base);out.push(`let ${s} = __tab([${d}], ${rb?'()=>'+recJS(rb):DEF[base]});`)});
       }else{
-        const base=ALIAS[tl]||tl; if(!(base in DEF)) err(i,`Type inconnu : « ${ty} »`);
-        ids.forEach(s=>{names.add(s);types[s]=base;if(base==='chaine'||base==='caractere')STR.add(s);out.push(`let ${s} = ${DEF[base]};`)});
+        const base=ALIAS[tl]||tl,rb=base in DEF?null:recFind(base); if(!(base in DEF)&&!rb) err(i,`Type inconnu : « ${ty} »`);
+        ids.forEach(s=>{names.add(s);types[s]=rb||base;if(base==='chaine'||base==='caractere')STR.add(s);out.push(`let ${s} = ${rb?recJS(rb):DEF[base]};`)});
       }
       continue;
     }
@@ -317,13 +509,19 @@ function transpile(src){
       m=mt(/^(\w+)\s*(?:<-|←|:=|=)\s*(.+)$/d); if(!m) err(i,"Constante attendue, ex. : PI = 3.14");
       names.add(m.g(1));types[m.g(1)]='constante';out.push(`const ${m.g(1)} = ${cx(m.g(2))};`);continue;
     }
-    const top=()=>stack[stack.length-1];
     const close=(kind,js)=>{if(top()!==kind)err(i,top()?`« fin${top()} » attendu avant ceci`:`Aucun bloc « ${kind} » ouvert`);stack.pop();out.push(js)};
-    if(k==='fin'){ if(stack.length)err(i,`Bloc « ${top()} » non fermé`); out.push(S); ended=true; continue }
+    if(k==='fin'){ if(spec)err(i,`Utilise « Fin${spec.kind} » pour terminer ce sous-programme`); if(stack.length)err(i,`Bloc « ${top()} » non fermé`); out.push(S); ended=true; continue }
     if(m=mt(/^si\s+(.+)\s+alors$/d)){stack.push('si');out.push(S,`if (${cx(m.g(1))}) {`);continue}
     if(m=mt(/^sinon\s+si\s+(.+)\s+alors$/d)){if(top()!=='si')err(i,"« sinon si » en dehors d'un « si »");out.push(`} else if (${cx(m.g(1))}) {`);continue}
-    if(k==='sinon'){if(top()!=='si')err(i,"« sinon » en dehors d'un « si »");out.push('} else {');continue}
+    if(k==='sinon'){
+      if(top()==='selon'){out.push((sw[sw.length-1]?'break; } ':'')+'default: {');sw[sw.length-1]=true;continue}
+      if(top()!=='si')err(i,"« sinon » en dehors d'un « si » ou d'un « selon »");out.push('} else {');continue}
     if(k==='finsi'){close('si','}');continue}
+    if(m=mt(/^selon\s+(.+?)(?:\s+faire)?$/d)){stack.push('selon');sw.push(false);out.push(S,`switch (${cx(m.g(1))}) {`);continue}
+    if(m=mt(/^cas\s+(.+?)\s*:$/d)){
+      if(top()!=='selon')err(i,"« cas » en dehors d'un « selon »");
+      out.push((sw[sw.length-1]?'break; } ':'')+splitArgs(m.g(1)).map(v=>`case ${cx(v)}:`).join(' ')+' {');sw[sw.length-1]=true;continue}
+    if(k==='finselon'){const had=sw[sw.length-1];close('selon',(had?'break; }':'')+'}');sw.pop();continue}
     if(m=mt(/^tantque\s+(.+)\s+faire$/d)){stack.push('tantque');out.push(`while (${cx(m.g(1))}) { __g(); ${S}`);continue}
     if(k==='fintantque'){close('tantque','}');continue}
     if(m=mt(/^pour\s+(\w+)\s+(?:de|<-|←)\s+(.+?)\s+a\s+(.+?)(?:\s+pas\s+(.+?))?\s+faire$/d)){
@@ -333,25 +531,203 @@ function transpile(src){
     if(k==='finpour'){close('pour','}}');continue}
     if(k==='repeter'){stack.push('repeter');out.push(`do { __g(); ${S}`);continue}
     if(m=mt(/^jusqua\s+(.+)$/d)){close('repeter',`} while (!(${cx(m.g(1))}));`);continue}
+    if(m=mt(/^retourner(?:\s+(.+))?$/d)){
+      if(!spec)err(i,"« retourner » n'est possible que dans une fonction ou une procédure");
+      out.push(m.r[1]?`return ${cx(m.g(1))};`:'return;');continue}
     if(m=mt(/^(ecrireln|ecrire|afficher)\s*\((.*)\)$/d)){const a=m.g(2).trim();out.push(S,`__w(${m.r[1]==='ecrire'?0:1}${a?','+cx(a):''});`);continue}
     if(m=mt(/^lire\s*\((.+)\)$/d)){
       const T=m.g(1).trim(),b=(T.match(/^[A-Za-z_]\w*/)||[''])[0];
       if(!names.has(b))err(i,`Variable « ${b||T} » non déclarée`);
-      out.push(S,`${cx(T)} = __r("${(types[b]||'chaine').replace('table de ','')}");`);continue}
+      out.push(S,`${cx(T)} = __r("${typeOfTarget(T,types)}");`);continue}
+    if((m=mt(/^(\w+)\s*\((.*)\)$/d))&&SIGS[m.g(1)]){
+      const sig=SIGS[m.g(1)],args=splitArgs(m.g(2).trim());
+      if(args.length!==sig.params.length)err(i,`« ${sig.name} » attend ${sig.params.length} argument(s), ${args.length} fourni(s)`);
+      const js=args.map((a,j)=>{
+        if(!sig.params[j].ref)return cx(a);
+        if(!/^[A-Za-z_]\w*(\[[^\]]*\])*$/.test(a))err(i,`L'argument « ${a} » doit être une variable (paramètre « var »)`);
+        if(!names.has(a.match(/^\w+/)[0]))err(i,`Variable « ${a.match(/^\w+/)[0]} » non déclarée`);
+        return `{g:()=>(${cx(a)}),s:__v=>{${cx(a)}=__v}}`});
+      out.push(S,`${sig.name}(${js.join(',')});`);continue}
     if(m=mt(/^(.+?)\s*(?:<-|←|:=)\s*(.+)$/d)){
       const l=m.g(1),b=(l.match(/^[A-Za-z_]\w*/)||[''])[0];
       if(!names.has(b))err(i,`Variable « ${b||l} » non déclarée`);
-      if(STR.has(b)&&/\[/.test(l))err(i,"Impossible de modifier un caractère d'une chaîne : reconstruis la chaîne avec +");
+      if(STR.has(b)&&/\[/.test(l)){
+        const mi=l.trim().match(/^([A-Za-z_]\w*)\[([\s\S]+)\]$/);if(!mi)err(i,"Affectation de caractère invalide");
+        out.push(S,`${b} = __setch(${b},${cx(mi[2])},${cx(m.g(2))});`);continue}
       out.push(S,`${cx(l)} = ${cx(m.g(2))};`);continue}
     err(i,`Instruction non reconnue : « ${o} »`);
   }
-  if(sec===null) err(0,"Programme vide");
-  if(!ended) err(L.length-1,"« Fin » manquant");
-  const isDecl=l=>/^(let|const) /.test(l);
-  return {name,types,js:`with(__lib){\n${out.filter(isDecl).join('\n')}\nconst __snap=()=>{try{return {${[...names].join(',')}}}catch(e){return {}}};\ntry{\n${out.filter(l=>!isDecl(l)).join('\n')}\n}catch(e){e.snap=__snap();throw e}\nreturn __snap();}`};
+  if(spec){
+    if(sec!=='body')err(to,`« Debut » manquant dans « ${spec.name} »`);
+    if(stack.length)err(to,`Bloc « ${top()} » non fermé`);
+    const ps=spec.params,decls=out.filter(isDecl),body=out.filter(l=>!isDecl(l));
+    return {js:`function ${spec.name}(${ps.map((p,j)=>'__a'+j).join(',')}){\n${ps.map((p,j)=>`let ${p.n} = ${p.ref?`__a${j}.g()`:`__a${j}`};`).join('\n')}\n${decls.join('\n')}\ntry{\n${body.join('\n')}\n}finally{${ps.map((p,j)=>p.ref?`__a${j}.s(${p.n});`:'').join('')}}\n}`};
+  }
+  if(sec===null)err(0,"Programme vide");
+  if(!ended)err(L.length-1,"« Fin » manquant");
+  return {name,types,names:[...names],out};
+}
+function prepass(src){
+  const all=src.split('\n'),main=all.slice(),subs=[];SIGS={};RECS={};
+  const clean=l=>strip(l.replace(/\/\/.*$/,'')).trim().toLowerCase();
+  for(let i=0;i<all.length;i++){
+    const c=clean(all[i]);let m;
+    if(m=c.match(/^type\s+(\w+)\s*(?:=|:)\s*enregistrement$/)){
+      const nm=strip(all[i]).replace(/\/\/.*$/,'').trim().match(/^type\s+(\w+)/i)[1],fields=[];
+      let j=i+1;
+      while(j<all.length&&clean(all[j])!=='finenregistrement'){
+        const t=strip(all[j]).replace(/\/\/.*$/,'').trim();
+        if(t){
+          const f=t.match(/^(.+?)\s*:\s*(\w+)$/);if(!f)throw {line:j+1,msg:"Champ attendu, ex. : nom : chaine"};
+          const tl=f[2].toLowerCase(),base=ALIAS[tl]||tl,rec=base in DEF?null:recFind(tl);
+          if(!(base in DEF)&&!rec)throw {line:j+1,msg:`Type inconnu : « ${f[2]} »`};
+          f[1].split(',').forEach(n=>fields.push({n:n.trim(),base,rec}));
+        }
+        j++;
+      }
+      if(j>=all.length)throw {line:i+1,msg:"« FinEnregistrement » manquant"};
+      RECS[nm]=fields;for(let t=i;t<=j;t++)main[t]='';i=j;continue;
+    }
+    if(m=c.match(/^(fonction|procedure)\s+\w+/)){
+      const sig=parseSig(all[i],i);
+      if(SIGS[sig.name])throw {line:i+1,msg:`« ${sig.name} » est déjà défini`};
+      let j=i+1;while(j<all.length&&clean(all[j])!=='fin'+m[1])j++;
+      if(j>=all.length)throw {line:i+1,msg:`« Fin${m[1]} » manquant`};
+      SIGS[sig.name]=sig;subs.push({sig,from:i+1,to:j});
+      for(let t=i;t<=j;t++)main[t]='';
+      i=j;
+    }
+  }
+  return {all,main,subs};
+}
+function transpile(src){
+  const {all,main,subs}=prepass(src);
+  const M=compile(main,0,main.length,null),fns=subs.map(s=>compile(all,s.from,s.to,s.sig).js);
+  return {name:M.name,types:M.types,js:`with(__lib){\n${fns.join('\n')}\n${M.out.filter(isDecl).join('\n')}\nconst __snap=()=>{try{return {${M.names.join(',')}}}catch(e){return {}}};\ntry{\n${M.out.filter(l=>!isDecl(l)).join('\n')}\n}catch(e){e.snap=__snap();throw e}\nreturn __snap();}`};
+}
+
+/* ---------- Traduction en Python ---------- */
+const PYDEF={entier:'0',reel:'0.0',chaine:'""',caractere:'""',booleen:'False'};
+const pyRec=n=>'SimpleNamespace('+RECS[n].map(f=>f.n+'='+(f.rec?pyRec(f.rec):PYDEF[f.base])).join(', ')+')';
+function pyx(e,STRS){
+  return e.split(/("[^"]*"|'[^']*')/).map((p,i)=>{
+    if(i%2)return p;
+    p=strip(p).replace(/<>/g,'!=').replace(/(?<![<>!=])=(?!=)/g,'==').replace(/\bet\b/gi,'and').replace(/\bou\b/gi,'or').replace(/\bnon\b/gi,'not ')
+      .replace(/\bvrai\b/gi,'True').replace(/\bfaux\b/gi,'False').replace(/\bmod\b/gi,'%').replace(/\bdiv\b/gi,'//').replace(/\^/g,'**');
+    for(const n of STRS){
+      const re=new RegExp('\\b'+n+'\\[','g');let m;
+      while((m=re.exec(p))){
+        let d=1,j=m.index+m[0].length;
+        while(j<p.length&&d){if(p[j]==='[')d++;else if(p[j]===']')d--;j++}
+        p=p.slice(0,m.index)+`${n}[(${p.slice(m.index+m[0].length,j-1)})-1]`+p.slice(j);
+        re.lastIndex=m.index+n.length+1;
+      }
+    }
+    return p;
+  }).join('');
+}
+const PYH={
+ longueur:'def longueur(s):\n    return len(str(s))',racine:'def racine(x):\n    return math.sqrt(x)',
+ arrondi:'def arrondi(x):\n    return int(math.floor(x + 0.5))',tronque:'def tronque(x):\n    return int(x)',
+ aleatoire:'def aleatoire(n):\n    return random.randrange(n)',majuscule:'def majuscule(s):\n    return str(s).upper()',minuscule:'def minuscule(s):\n    return str(s).lower()',
+ sous_chaine:'def sous_chaine(s, d, l):\n    return str(s)[d - 1:d - 1 + l]',pos:'def pos(a, s):\n    return str(s).find(a) + 1',
+ _tab:'def _tab(dims, d, k=0):\n    lo, hi = dims[k]\n    return {i: (_tab(dims, d, k + 1) if k < len(dims) - 1 else (d() if callable(d) else d)) for i in range(lo, hi + 1)}',
+ _rng:'def _rng(a, b, p=1):\n    return range(a, b + (1 if p > 0 else -1), p)',
+ _setch:'def _setch(s, i, c):\n    return s[:i - 1] + str(c)[:1] + s[i:]'};
+function toPython(src){
+  transpile(src);
+  const {all,main,subs}=prepass(src),lines=[];let selId=0;
+  const block=(L,from,to,spec)=>{
+    const types={},STRS=new Set(),stack=[],sel=[];let ind=0,sec=spec?'h':null,pend;
+    const E=t=>{lines.push('    '.repeat(ind)+t+(pend?'  # '+pend:''));pend=''};
+    const px=e=>pyx(e,STRS),refs=spec?spec.params.filter(p=>p.ref).map(p=>p.n):[],rexp=refs.length>1?'('+refs.join(', ')+')':refs[0];
+    const top=()=>stack[stack.length-1];
+    if(spec){
+      E(`def ${spec.name}(${spec.params.map(p=>p.n).join(', ')}):`);ind=1;
+      spec.params.forEach(p=>{types[p.n]=p.table?'table de '+p.base:p.base;if(!p.table&&(p.base==='chaine'||p.base==='caractere'))STRS.add(p.n)});
+    }
+    for(let i=from;i<to;i++){
+      const cm=(L[i].match(/\/\/(.*)$/)||[])[1],o=L[i].replace(/\/\/.*$/,'').trim();
+      if(!o){if(cm!==undefined)E('# '+cm.trim());continue}
+      pend=cm&&cm.trim();
+      const k=strip(o).toLowerCase(),mt=re=>{const r=re.exec(k);return r&&{g:j=>o.slice(...r.indices[j]),r}};let m;
+      if(sec===null){m=mt(/^algorithme\s+(\w+)/d);E('# Algorithme '+(m?m.g(1):''));sec='h';continue}
+      if(sec!=='body'&&/^variables?\s*:?$/.test(k)){sec='var';continue}
+      if(sec!=='body'&&/^constantes?\s*:?$/.test(k)){sec='const';continue}
+      if(k==='debut'&&sec!=='body'){sec='body';continue}
+      if(sec==='var'){
+        m=mt(/^(.+?)\s*:\s*(.+)$/d);
+        const ids=m.g(1).split(',').map(s=>s.trim()),ty=m.g(2).trim(),tl=strip(ty).toLowerCase(),t=tl.match(/^(?:table|tableau)\s*((?:\[[^\]]+\]\s*)+)\s*de\s+(\w+)$/);
+        if(t){
+          const base=ALIAS[t[2]]||t[2],rb=base in DEF?null:recFind(base),dims=[...ty.matchAll(/\[\s*([^\].]+?)\s*\.\.\s*([^\]]+?)\s*\]/g)].map(x=>`(${px(x[1])}, ${px(x[2])})`).join(', ');
+          ids.forEach(s=>{types[s]='table de '+(rb||base);E(`${s} = _tab([${dims}], ${rb?'lambda: '+pyRec(rb):PYDEF[base]})`)});
+        }else{
+          const base=ALIAS[tl]||tl,rb=base in DEF?null:recFind(base);
+          ids.forEach(s=>{types[s]=rb||base;if(base==='chaine'||base==='caractere')STRS.add(s);E(`${s} = ${rb?pyRec(rb):PYDEF[base]}`)});
+        }
+        continue;
+      }
+      if(sec==='const'){m=mt(/^(\w+)\s*(?:<-|←|:=|=)\s*(.+)$/d);E(`${m.g(1)} = ${px(m.g(2))}`);continue}
+      if(k==='fin')continue;
+      if(m=mt(/^si\s+(.+)\s+alors$/d)){E('if '+px(m.g(1))+':');ind++;stack.push('si');continue}
+      if(m=mt(/^sinon\s+si\s+(.+)\s+alors$/d)){ind--;E('elif '+px(m.g(1))+':');ind++;continue}
+      if(k==='sinon'){
+        if(top()==='selon'){const s=sel[sel.length-1];if(s.open)ind--;E('else:');ind++;s.open=true;continue}
+        ind--;E('else:');ind++;continue}
+      if(k==='finsi'){ind--;stack.pop();continue}
+      if(m=mt(/^selon\s+(.+?)(?:\s+faire)?$/d)){const id=++selId;E('_s'+id+' = '+px(m.g(1)));sel.push({id,open:false});stack.push('selon');continue}
+      if(m=mt(/^cas\s+(.+?)\s*:$/d)){const s=sel[sel.length-1];if(s.open)ind--;E((s.open?'elif':'if')+' _s'+s.id+' in ('+splitArgs(m.g(1)).map(px).join(', ')+',):');ind++;s.open=true;continue}
+      if(k==='finselon'){const s=sel.pop();stack.pop();if(s.open)ind--;continue}
+      if(m=mt(/^tantque\s+(.+)\s+faire$/d)){E('while '+px(m.g(1))+':');ind++;stack.push('t');continue}
+      if(k==='fintantque'){ind--;stack.pop();continue}
+      if(m=mt(/^pour\s+(\w+)\s+(?:de|<-|←)\s+(.+?)\s+a\s+(.+?)(?:\s+pas\s+(.+?))?\s+faire$/d)){
+        const a=px(m.g(2)),b=px(m.g(3));
+        E(`for ${m.g(1)} in ${m.r[4]?`_rng(${a}, ${b}, ${px(m.g(4))})`:`range(${a}, ${b} + 1)`}:`);ind++;stack.push('p');continue}
+      if(k==='finpour'){ind--;stack.pop();continue}
+      if(k==='repeter'){E('while True:');ind++;stack.push('r');continue}
+      if(m=mt(/^jusqua\s+(.+)$/d)){E('if '+px(m.g(1))+':');ind++;E('break');ind-=2;stack.pop();continue}
+      if(m=mt(/^retourner(?:\s+(.+))?$/d)){
+        if(spec&&spec.kind==='procedure'&&refs.length)E('return '+rexp);else E('return'+(m.r[1]?' '+px(m.g(1)):''));continue}
+      if(m=mt(/^(ecrireln|ecrire|afficher)\s*\((.*)\)$/d)){
+        const a=m.g(2).trim(),nl=m.r[1]!=='ecrire';
+        E(a?`print(${px(a)}, sep=""${nl?'':', end=""'})`:(nl?'print()':'print(end="")'));continue}
+      if(m=mt(/^lire\s*\((.+)\)$/d)){
+        const T=m.g(1).trim(),t=typeOfTarget(T,types);
+        const rd={entier:'int(input())',reel:'float(input().replace(",", "."))',booleen:'input().strip().lower() in ("vrai", "true", "1")',caractere:'input()[:1]'}[t]||'input()';
+        E(px(T)+' = '+rd);continue}
+      if((m=mt(/^(\w+)\s*\((.*)\)$/d))&&SIGS[m.g(1)]){
+        const sig=SIGS[m.g(1)],args=splitArgs(m.g(2).trim()),rf=args.filter((a,j)=>sig.params[j].ref).map(px);
+        E((rf.length?rf.join(', ')+' = ':'')+sig.name+'('+args.map(px).join(', ')+')');continue}
+      if(m=mt(/^(.+?)\s*(?:<-|←|:=)\s*(.+)$/d)){
+        const l=m.g(1).trim(),b=(l.match(/^[A-Za-z_]\w*/)||[''])[0];
+        if(STRS.has(b)&&/\[/.test(l)){const mi=l.match(/^([A-Za-z_]\w*)\[([\s\S]+)\]$/);E(`${b} = _setch(${b}, ${px(mi[2])}, ${px(m.g(2))})`)}
+        else E(px(l)+' = '+px(m.g(2)));
+        continue}
+    }
+    if(spec&&refs.length)E('return '+rexp);
+  };
+  subs.forEach(s=>{block(all,s.from,s.to,s.sig);lines.push('')});
+  block(main,0,main.length,null);
+  const out=[];
+  lines.forEach((l,i)=>{
+    out.push(l);
+    const t=l.replace(/\s+#.*$/,'').trimEnd();
+    if(/:$/.test(t)&&!/^\s*#/.test(t)){
+      const cur=l.match(/^ */)[0].length;let j=i+1;while(j<lines.length&&lines[j].trim()==='')j++;
+      const nx=j<lines.length?lines[j].match(/^ */)[0].length:-1;
+      if(nx<=cur)out.push(' '.repeat(cur+4)+'pass');
+    }
+  });
+  const body=out.join('\n'),imp=[],help=[];
+  if(/\bSimpleNamespace\b/.test(body))imp.push('from types import SimpleNamespace');
+  if(/\b(racine|arrondi)\(/.test(body))imp.push('import math');
+  if(/\baleatoire\(/.test(body))imp.push('import random');
+  Object.keys(PYH).forEach(n=>{if(new RegExp('\\b'+n+'\\(').test(body))help.push(PYH[n])});
+  return ['# Traduit depuis AlgoLab (réalisé par EL HASSAK IMAD)',...imp,'',...help.flatMap(x=>[x,'']),body].join('\n').replace(/\n{3,}/g,'\n\n')+'\n';
 }
 
 /* ---------- Exécution + trace ---------- */
+const mkTab=(d,def,k=0)=>{const o={};for(let i=d[k][0];i<=d[k][1];i++)o[i]=k===d.length-1?(typeof def==='function'?def():def):mkTab(d,def,k+1);return o};
 let TRACE=[],step=0,timer=null,TYPES={},LASTBUF='',TRUNC=false;
 const fv=v=>typeof v==='string'?JSON.stringify(v):String(v);
 function fmt(v){return v&&typeof v==='object'?'{ '+Object.entries(v).map(([k,x])=>k+': '+fmt(x)).join(', ')+' }':fv(v)}
@@ -361,7 +737,8 @@ function showVars(snap){
 }
 function run(){
   stopPlay();setBar(0);
-  const out=$('out');let buf='',steps=0,curLine=0;TRACE=[];TRUNC=false;
+  const out=$('out');let buf='',steps=0,curLine=0,cnt=0;TRACE=[];TRUNC=false;
+  const Q=$('inputs').value.trim()?$('inputs').value.split('\n'):[];
   let tr;
   try{tr=transpile($('src').value)}
   catch(e){out.innerHTML=`<span class="e">Erreur ligne ${e.line} : ${esc(e.msg)}</span>`;setBar(e.line,'err');$('status').textContent='Erreur de syntaxe';showTab('console');renderViz();return false}
@@ -369,11 +746,13 @@ function run(){
   const env={
     __w:(nl,...a)=>{buf+=a.join('')+(nl?'\n':'')},
     __g:()=>{if(++steps>3e6)throw new Error("Boucle infinie suspectée : exécution arrêtée")},
-    __s:(l,sn)=>{curLine=l;if(TRACE.length<4000)TRACE.push({line:l,vars:structuredClone(sn()),out:buf.length});else TRUNC=true},
+    __s:(l,sn)=>{curLine=l;cnt++;if(TRACE.length<4000)TRACE.push({line:l,vars:structuredClone(sn()),out:buf.length});else TRUNC=true},
     __ch:(s,i)=>{if(!Number.isInteger(i)||i<1||i>String(s).length)throw new Error(`Indice ${i} hors de la chaîne (1 à ${String(s).length})`);return String(s)[i-1]},
-    __tab:(d,def,k=0)=>{const o={};for(let i=d[k][0];i<=d[k][1];i++)o[i]=k===d.length-1?def:env.__tab(d,def,k+1);return o},
+    __setch:(s,i,c)=>{if(!Number.isInteger(i)||i<1||i>String(s).length)throw new Error(`Indice ${i} hors de la chaîne (1 à ${String(s).length})`);return String(s).slice(0,i-1)+String(c).charAt(0)+String(s).slice(i)},
+    __tab:mkTab,
     __r:ty=>{
-      const q=buf.slice(buf.lastIndexOf('\n')+1),v=prompt(q||'Saisie :'); if(v===null)throw new Error("Saisie annulée");
+      const q=buf.slice(buf.lastIndexOf('\n')+1);let v;
+      if(Q.length)v=Q.shift().replace(/\r$/,'');else{v=prompt(q||'Saisie :');if(v===null)throw new Error("Saisie annulée")}
       buf+=v+'\n';
       if(ty==='entier'||ty==='reel'){const x=ty==='entier'?parseInt(v,10):parseFloat(v.replace(',','.'));if(isNaN(x))throw new Error(`« ${v} » n'est pas un ${ty}`);return x}
       if(ty==='booleen')return /^(vrai|true|1)$/i.test(v.trim());
@@ -381,12 +760,12 @@ function run(){
     }};
   const t0=performance.now();let ok=true;
   try{
-    const snap=new Function('__w','__g','__tab','__r','__s','__ch','__lib',tr.js)(env.__w,env.__g,env.__tab,env.__r,env.__s,env.__ch,lib);
+    const snap=new Function('__w','__g','__tab','__r','__s','__ch','__setch','__lib',tr.js)(env.__w,env.__g,env.__tab,env.__r,env.__s,env.__ch,env.__setch,lib);
     out.textContent=buf;showVars(snap);
-    $('status').textContent=`« ${tr.name} » terminé en ${(performance.now()-t0).toFixed(1)} ms · ${TRACE.length} étapes`;
+    $('status').textContent=`« ${tr.name} » terminé en ${(performance.now()-t0).toFixed(1)} ms · ${cnt} instructions exécutées`;
   }catch(e){
     ok=false;let msg=e.message||String(e);
-    const nd=msg.match(/^(\w+) is not defined/); if(nd)msg=`Variable « ${nd[1]} » non déclarée`;
+    const nd=msg.match(/^(\w+) is not defined/); if(nd)msg=`« ${nd[1]} » n'est pas déclaré (variable, fonction ou procédure)`;
     if(/Assignment to constant/.test(msg))msg="Une constante ne peut pas être modifiée";
     out.textContent=buf;out.insertAdjacentHTML('beforeend',`\n<span class="e">Erreur d'exécution (ligne ${curLine}) : ${esc(msg)}</span>`);
     if(e.snap)TRACE.push({line:curLine,vars:structuredClone(e.snap),out:buf.length,err:msg});
@@ -394,6 +773,306 @@ function run(){
   }
   LASTBUF=buf;step=0;renderViz();return ok;
 }
+
+/* ---------- Exécution silencieuse (tests) ---------- */
+function execHeadless(code,inputs){
+  const tr=transpile(code),Q=[...inputs];let buf='',cnt=0,st=0;
+  const E={
+    __w:(nl,...a)=>{buf+=a.join('')+(nl?'\n':'')},
+    __g:()=>{if(++st>2e6)throw new Error("Boucle infinie suspectée")},__s:()=>{cnt++},
+    __ch:(s,i)=>{if(!Number.isInteger(i)||i<1||i>String(s).length)throw new Error(`Indice ${i} hors de la chaîne`);return String(s)[i-1]},
+    __setch:(s,i,c)=>{if(!Number.isInteger(i)||i<1||i>String(s).length)throw new Error(`Indice ${i} hors de la chaîne`);return String(s).slice(0,i-1)+String(c).charAt(0)+String(s).slice(i)},
+    __tab:mkTab,
+    __r:ty=>{
+      if(!Q.length)throw new Error("Pas assez d'entrées pour « lire »");
+      const v=Q.shift().replace(/\r$/,'');buf+=v+'\n';
+      if(ty==='entier'||ty==='reel'){const x=ty==='entier'?parseInt(v,10):parseFloat(v.replace(',','.'));if(isNaN(x))throw new Error(`« ${v} » n'est pas un ${ty}`);return x}
+      if(ty==='booleen')return /^(vrai|true|1)$/i.test(v.trim());
+      return ty==='caractere'?v.charAt(0):v;
+    }};
+  new Function('__w','__g','__tab','__r','__s','__ch','__setch','__lib',tr.js)(E.__w,E.__g,E.__tab,E.__r,E.__s,E.__ch,E.__setch,lib);
+  return {out:buf,cnt};
+}
+let LT=null;const X=$('xdlg');
+function openX(title,html){$('xt').textContent=title;$('xb').innerHTML=html;$('xb').onclick=null;$('xb').oninput=null;X.showModal()}
+$('xclose').onclick=()=>X.close();
+X.addEventListener('close',()=>clearInterval(LT));
+X.addEventListener('click',e=>{if(e.target===X)X.close()});
+const progName=()=>(src.value.match(/algorithme\s+(\w+)/i)||[0,'algorithme'])[1];
+function openPy(){
+  let code;
+  try{code=toPython(src.value)}catch(e){openX('Traduction en Python',`<p class="e">${e.line?`Ligne ${e.line} : `:''}${esc(e.msg||e.message)}</p><p>Corrige d'abord l'algorithme, puis relance la traduction.</p>`);return}
+  openX('Traduction en Python','<div class="row"><button id="pcopy" class="p">Copier</button><button id="pdl">Télécharger .py</button></div><pre class="py" id="pycode"></pre>');
+  $('pycode').textContent=code;
+  $('pcopy').onclick=()=>{if(navigator.clipboard)navigator.clipboard.writeText(code).then(()=>{$('pcopy').textContent='Copié ✓'},()=>prompt('Copie le code :',code));else prompt('Copie le code :',code)};
+  $('pdl').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([code],{type:'text/x-python'}));a.download=progName()+'.py';a.click();URL.revokeObjectURL(a.href)};
+}
+function chart(res){
+  const pts=res.map((r,j)=>({x:r.n||j+1,y:r.cnt})).filter(p=>p.y!=null).sort((a,b)=>a.x-b.x);
+  if(pts.length<2)return '<p class="emp">Ajoute au moins 2 tests exécutables pour tracer la complexité.</p>';
+  const W=340,H=170,L=44,mx=Math.max(...pts.map(p=>p.x)),mn=Math.min(...pts.map(p=>p.x)),my=Math.max(...pts.map(p=>p.y),1);
+  const X1=x=>L+(mx===mn?.5:(x-mn)/(mx-mn))*(W-L-14),Y1=y=>H-26-(y/my)*(H-46),st='stroke:var(--mute);stroke-width:1',tx='fill:var(--mute);font:10px var(--mono)';
+  return `<h3 style="font-size:14px">Complexité : instructions exécutées selon n</h3><svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:560px;background:var(--edit);border:1px solid var(--line);border-radius:8px">
+  <line x1="${L}" y1="${H-26}" x2="${W-8}" y2="${H-26}" style="${st}"/><line x1="${L}" y1="10" x2="${L}" y2="${H-26}" style="${st}"/>
+  <polyline fill="none" style="stroke:var(--acc);stroke-width:2" points="${pts.map(p=>X1(p.x).toFixed(1)+','+Y1(p.y).toFixed(1)).join(' ')}"/>
+  ${pts.map(p=>`<circle cx="${X1(p.x).toFixed(1)}" cy="${Y1(p.y).toFixed(1)}" r="3.5" style="fill:var(--acc)"><title>n=${p.x} : ${p.y}</title></circle>`).join('')}
+  <text x="${L}" y="${H-10}" style="${tx}">${mn}</text><text x="${W-30}" y="${H-10}" style="${tx}">${mx}</text><text x="4" y="18" style="${tx}">${my}</text><text x="${W/2-10}" y="${H-10}" style="${tx}">n</text></svg>`;
+}
+function openTests(){
+  const key='algotests:'+progName();let T=[];
+  try{T=JSON.parse(localStorage.getItem(key)||'[]')}catch(e){}
+  if(!T.length)T=[{i:'',e:'',n:''}];
+  const save=()=>{try{localStorage.setItem(key,JSON.stringify(T))}catch(e){}},ins_=t=>t.i.trim()?t.i.split('\n'):[];
+  const norm=s=>s.replace(/[ \t]+$/gm,'').trim();
+  const runAll=()=>T.map(t=>{try{const r=execHeadless(src.value,ins_(t)),ok=norm(r.out)===norm(t.e);return {ok,cnt:r.cnt,n:+t.n||null,msg:`Attendu :\n${t.e}\n\nObtenu :\n${r.out}`}}catch(e){return {ok:false,cnt:null,n:+t.n||null,msg:e.line?`Ligne ${e.line} : ${e.msg}`:e.message}}});
+  const draw=res=>{
+    $('xb').innerHTML=`<p style="color:var(--mute)">Chaque test : entrées (une valeur par ligne, lues par « lire »), sortie attendue, et la taille <b>n</b> des données (facultatif) pour tracer la complexité.</p>`+
+    T.map((t,j)=>`<div class="tcase"><b>Test ${j+1}</b> <input data-f="n" data-j="${j}" value="${esc(t.n)}" placeholder="n" size="6" inputmode="numeric"> <button data-del="${j}" aria-label="Supprimer">✕</button>
+      <div class="two"><textarea data-f="i" data-j="${j}" rows="3" placeholder="Entrées">${esc(t.i)}</textarea><textarea data-f="e" data-j="${j}" rows="3" placeholder="Sortie attendue">${esc(t.e)}</textarea></div>
+      ${res&&res[j]?`<div class="${res[j].ok?'ok':'e'}">${res[j].ok?'✓ Réussi':'✗ Échec'}${res[j].cnt!=null?` · ${res[j].cnt} instructions`:''}${res[j].ok?'':`<pre style="white-space:pre-wrap;font:12px var(--mono)">${esc(res[j].msg)}</pre>`}</div>`:''}</div>`).join('')+
+    `<div class="row"><button id="tadd">+ Ajouter un test</button><button id="tfill">Remplir les sorties attendues avec le résultat actuel</button><button id="trun" class="p">▶ Lancer les tests</button></div>`+
+    (res?`<p><b>${res.filter(r=>r.ok).length}/${res.length}</b> test(s) réussi(s)</p>`+chart(res):'');
+  };
+  openX('Jeux de tests et complexité','');draw();
+  $('xb').oninput=e=>{const f=e.target.dataset.f;if(f){T[+e.target.dataset.j][f]=e.target.value;save()}};
+  $('xb').onclick=e=>{
+    const b=e.target.closest('button');if(!b)return;
+    if(b.dataset.del!==undefined){T.splice(+b.dataset.del,1);if(!T.length)T.push({i:'',e:'',n:''});save();draw()}
+    else if(b.id==='tadd'){T.push({i:'',e:'',n:''});save();draw()}
+    else if(b.id==='trun')draw(runAll());
+    else if(b.id==='tfill'){T.forEach(t=>{try{t.e=execHeadless(src.value,ins_(t)).out.trim()}catch(x){}});save();draw()}
+  };
+}
+/* ---------- Labo : structures de données ---------- */
+function openLabo(){
+  openX('Labo : structures de données','<div class="tabs" id="lt"><button data-l="pile" class="on">Pile</button><button data-l="file">File</button><button data-l="liste">Liste chaînée</button><button data-l="arbre">Arbre (ABR)</button><button data-l="graphe">Graphe</button><button data-l="tri">Tri animé</button></div><div id="lab" style="padding-top:8px"></div>');
+  const V={pile:labList,file:labList,liste:labLinked,arbre:labTree,graphe:labGraph,tri:labSort};
+  const show=n=>{clearInterval(LT);document.querySelectorAll('#lt button').forEach(b=>b.classList.toggle('on',b.dataset.l===n));$('lab').innerHTML='';V[n]($('lab'),n)};
+  $('lt').onclick=e=>{if(e.target.dataset.l)show(e.target.dataset.l)};
+  show('pile');
+}
+function labList(L,kind){
+  const isS=kind==='pile',a=[];let last=-1,msg='';
+  L.innerHTML=`<div class="row"><input id="lv" placeholder="valeur" size="8" aria-label="valeur"><button id="l1" class="p">${isS?'Empiler':'Enfiler'}</button><button id="l2">${isS?'Dépiler':'Défiler'}</button><button id="l3">${isS?'Sommet':'Tête'}</button><button id="l4">Vider</button></div><div id="lm" class="emp" style="padding:4px 0"></div><div id="ls"></div><p class="emp" style="padding:4px 0">${isS?'LIFO : le dernier entré est le premier sorti.':'FIFO : le premier entré est le premier sorti.'}</p>`;
+  const draw=()=>{
+    $('lm').textContent=msg;
+    const box=(v,j)=>`<div class="nb${j===last?' new':''}">${esc(v)}${isS?(j===a.length-1?'<small>sommet</small>':''):(j===0?'<small>tête</small>':j===a.length-1?'<small>queue</small>':'')}</div>`;
+    $('ls').innerHTML=a.length?`<div class="${isS?'stk':'qrow'}">${a.map(box).join('')}</div>`:`<div class="emp">${isS?'Pile vide':'File vide'}</div>`;
+  };
+  $('l1').onclick=()=>{const v=$('lv').value.trim();$('lv').value='';if(!v){msg='Saisis une valeur';draw();return}a.push(v);last=a.length-1;msg=`${isS?'Empilé':'Enfilé'} : ${v}`;draw();$('lv').focus()};
+  $('l2').onclick=()=>{if(!a.length)msg=`${isS?'Pile':'File'} vide : impossible de retirer`;else{const v=isS?a.pop():a.shift();msg=`${isS?'Dépilé':'Défilé'} : ${v}`}last=-1;draw()};
+  $('l3').onclick=()=>{msg=a.length?`${isS?'Sommet':'Tête'} : ${isS?a[a.length-1]:a[0]}`:'Structure vide';last=-1;draw()};
+  $('l4').onclick=()=>{a.length=0;msg='Vidée';last=-1;draw()};
+  $('lv').onkeydown=e=>{if(e.key==='Enter')$('l1').click()};
+  draw();
+}
+function labTree(L){
+  let root=null,hi=new Set(),msg='Insère des nombres pour construire l\'arbre binaire de recherche.';
+  L.innerHTML=`<div class="row"><input id="tv" placeholder="nombre" size="7" inputmode="numeric"><button id="t1" class="p">Insérer</button><button id="t2">Rechercher</button><button id="t3">Infixe</button><button id="t4">Préfixe</button><button id="t5">Postfixe</button><button id="t6">Exemple</button><button id="t8">Supprimer</button><button id="t7">Vider</button></div><div id="tm" class="emp" style="padding:4px 0"></div><div class="tree" id="tt"></div>`;
+  const layout=()=>{const pos=[];let c=0;const go=(n,d)=>{if(!n)return;go(n.l,d+1);n.x=c++;n.y=d;pos.push(n);go(n.r,d+1)};go(root,0);return pos};
+  const draw=()=>{
+    $('tm').textContent=msg;const ns=layout();
+    if(!ns.length){$('tt').innerHTML='<div class="emp">Arbre vide</div>';return}
+    const W=ns.length*40+20,H=Math.max(...ns.map(n=>n.y))*55+60,X1=n=>n.x*40+30,Y1=n=>n.y*55+30;
+    $('tt').innerHTML=`<svg width="${W}" height="${H}" style="display:block">${ns.map(n=>[n.l,n.r].filter(Boolean).map(c=>`<line x1="${X1(n)}" y1="${Y1(n)}" x2="${X1(c)}" y2="${Y1(c)}" style="stroke:var(--mute);stroke-width:1.5"/>`).join('')).join('')}${ns.map(n=>`<circle cx="${X1(n)}" cy="${Y1(n)}" r="16" style="fill:${hi.has(n)?'var(--op)':'var(--panel)'};stroke:var(--acc);stroke-width:2"/><text x="${X1(n)}" y="${Y1(n)+4}" text-anchor="middle" style="fill:${hi.has(n)?'#111':'var(--ink)'};font:600 12px var(--mono)">${esc(n.v)}</text>`).join('')}</svg>`;
+  };
+  const anim=(seq,done)=>{clearInterval(LT);hi=new Set();let i=0;LT=setInterval(()=>{if(i>=seq.length){clearInterval(LT);hi=new Set();if(done)done();draw();return}hi=new Set([seq[i++]]);draw()},450)};
+  const num=()=>{const v=parseFloat($('tv').value);$('tv').value='';return isNaN(v)?null:v};
+  const put=v=>{const nn={v,l:null,r:null};if(!root){root=nn;return}let n=root;for(;;){if(v===n.v)return;if(v<n.v){if(!n.l){n.l=nn;return}n=n.l}else{if(!n.r){n.r=nn;return}n=n.r}}};
+  $('t1').onclick=()=>{
+    const v=num();if(v===null){msg='Saisis un nombre';draw();return}
+    const path=[];let n=root;
+    while(n){path.push(n);if(v===n.v){msg=`${v} existe déjà`;anim(path);return}n=v<n.v?n.l:n.r}
+    msg=`Insertion de ${v} : on compare avec chaque nœud, à gauche si plus petit, à droite sinon`;
+    anim(path,()=>{const nn={v,l:null,r:null};if(!path.length)root=nn;else{const q=path[path.length-1];if(v<q.v)q.l=nn;else q.r=nn}hi=new Set([nn]);draw();setTimeout(()=>{hi=new Set();draw()},600)});
+  };
+  $('t2').onclick=()=>{
+    const v=num();if(v===null)return;const path=[];let n=root,f=false;
+    while(n){path.push(n);if(v===n.v){f=true;break}n=v<n.v?n.l:n.r}
+    msg=f?`${v} trouvé après ${path.length} comparaison(s)`:`${v} absent (${path.length} comparaison(s))`;anim(path);
+  };
+  const trav=k=>{
+    const o=[],go=n=>{if(!n)return;if(k==='pre')o.push(n);go(n.l);if(k==='in')o.push(n);go(n.r);if(k==='post')o.push(n)};go(root);
+    msg=`${{in:'Infixe (gauche, racine, droite)',pre:'Préfixe (racine, gauche, droite)',post:'Postfixe (gauche, droite, racine)'}[k]} : ${o.map(n=>n.v).join(', ')||'—'}`;anim(o);
+  };
+  $('t3').onclick=()=>trav('in');$('t4').onclick=()=>trav('pre');$('t5').onclick=()=>trav('post');
+  $('t6').onclick=()=>{root=null;[50,30,70,20,40,60,80].forEach(put);msg='Arbre d\'exemple : essaie les parcours.';draw()};
+  $('t7').onclick=()=>{clearInterval(LT);root=null;msg='Arbre vidé';draw()};
+  const del=(n,v)=>{if(!n)return null;if(v<n.v)n.l=del(n.l,v);else if(v>n.v)n.r=del(n.r,v);else{if(!n.l)return n.r;if(!n.r)return n.l;let m=n.r;while(m.l)m=m.l;n.v=m.v;n.r=del(n.r,m.v)}return n};
+  $('t8').onclick=()=>{
+    const v=num();if(v===null)return;const path=[];let n=root;
+    while(n&&n.v!==v){path.push(n);n=v<n.v?n.l:n.r}
+    if(!n){msg=`${v} absent : rien à supprimer`;anim(path);return}
+    path.push(n);msg=`Suppression de ${v} : feuille, un seul fils, ou remplacement par le plus petit du sous-arbre droit`;
+    anim(path,()=>{root=del(root,v);draw()});
+  };
+  $('tv').onkeydown=e=>{if(e.key==='Enter')$('t1').click()};
+  draw();
+}
+function labSort(L){
+  let arr=[],steps=null,k=0,on=false;
+  L.innerHTML=`<div class="row"><select id="sa"><option value="b">Tri à bulles</option><option value="s">Tri par sélection</option><option value="i">Tri par insertion</option></select><label>Taille <input id="sn" type="number" min="5" max="40" value="16" style="width:64px"></label><select id="sv"><option value="400">Lent</option><option value="120" selected>Normal</option><option value="25">Rapide</option></select></div><div class="row"><button id="s1">Mélanger</button><button id="s2" class="p">▶ Lancer</button><button id="s3">Pas à pas</button></div><div id="sc" class="emp" style="padding:2px 0"></div><div class="bars" id="sb"></div>`;
+  const draw=(a,hl_,t,c,s)=>{const mx=Math.max(...a);$('sb').innerHTML=a.map((v,j)=>`<i class="${hl_.includes(j)?t:''}" style="height:${v/mx*100}%"></i>`).join('');$('sc').textContent=`Comparaisons : ${c} · Échanges : ${s}`};
+  const reset=()=>{clearInterval(LT);on=false;steps=null;k=0;$('s2').textContent='▶ Lancer';draw(arr,[],'',0,0)};
+  const shuffle=()=>{const n=Math.max(5,Math.min(40,+$('sn').value||16));arr=Array.from({length:n},(_,i)=>i+1).sort(()=>Math.random()-.5);reset()};
+  const gen=()=>{
+    const a=[...arr],S=[],n=a.length,alg=$('sa').value;let c=0,s=0;const snap=(h2,t)=>S.push({a:[...a],h:h2,t,c,s});
+    if(alg==='b'){for(let i=0;i<n-1;i++)for(let j=0;j<n-1-i;j++){c++;snap([j,j+1],'c');if(a[j]>a[j+1]){[a[j],a[j+1]]=[a[j+1],a[j]];s++;snap([j,j+1],'s')}}}
+    else if(alg==='s'){for(let i=0;i<n-1;i++){let m=i;for(let j=i+1;j<n;j++){c++;snap([m,j],'c');if(a[j]<a[m])m=j}if(m!==i){[a[i],a[m]]=[a[m],a[i]];s++;snap([i,m],'s')}}}
+    else{for(let i=1;i<n;i++){let j=i;while(j>0){c++;snap([j-1,j],'c');if(a[j-1]>a[j]){[a[j-1],a[j]]=[a[j],a[j-1]];s++;snap([j-1,j],'s');j--}else break}}}
+    S.push({a:[...a],h:a.map((_,i)=>i),t:'d',c,s});return S;
+  };
+  const once=()=>{if(!steps){steps=gen();k=0}if(k>=steps.length)return false;const x=steps[k++];draw(x.a,x.h,x.t,x.c,x.s);return k<steps.length};
+  const tick=()=>{if(!once()){clearInterval(LT);on=false;$('s2').textContent='▶ Relancer';k=steps.length}};
+  $('s1').onclick=shuffle;$('sa').onchange=reset;$('sn').onchange=shuffle;
+  $('s2').onclick=()=>{
+    if(on){clearInterval(LT);on=false;$('s2').textContent='▶ Reprendre';return}
+    if(!steps||k>=steps.length){steps=null;k=0}
+    on=true;$('s2').textContent='⏸ Pause';LT=setInterval(tick,+$('sv').value);
+  };
+  $('sv').onchange=()=>{if(on){clearInterval(LT);LT=setInterval(tick,+$('sv').value)}};
+  $('s3').onclick=()=>{clearInterval(LT);on=false;$('s2').textContent='▶ Reprendre';if(k>=(steps?steps.length:1)){steps=null;k=0}once()};
+  shuffle();
+}
+/* ---------- Organigramme ---------- */
+const FL={NW:190,NH:38,DW:176,DH:64,G:26,HG:36};
+const fcut=(s,n)=>{s=String(s).trim();return s.length>n?s.slice(0,n-1)+'…':s};
+function parseFlow(code){
+  transpile(code);
+  const {main}=prepass(code),root=[],st=[{list:root,kind:'root'}];let started=false;
+  for(const raw of main){
+    const o=raw.replace(/\/\/.*$/,'').trim();if(!o)continue;
+    const k=strip(o).toLowerCase(),mt=re=>{const r=re.exec(k);return r&&{g:j=>o.slice(...r.indices[j]),r}};let m;
+    if(!started){if(k==='debut')started=true;continue}
+    if(k==='fin')break;
+    const f=st[st.length-1],add=n=>f.list.push(n);
+    if(f.kind==='selon'){if(k==='finselon'){if(f.depth>0)f.depth--;else st.pop()}else if(/^selon\s/.test(k))f.depth++;continue}
+    if(m=mt(/^si\s+(.+)\s+alors$/d)){const n={t:'if',c:m.g(1),a:[],b:[]};add(n);st.push({list:n.a,kind:'if',node:n});continue}
+    if(m=mt(/^sinon\s+si\s+(.+)\s+alors$/d)){const n={t:'if',c:m.g(1),a:[],b:[]};f.node.b=[n];f.node=n;f.list=n.a;continue}
+    if(k==='sinon'){f.list=f.node.b;continue}
+    if(k==='finsi'||k==='fintantque'||k==='finpour'){st.pop();continue}
+    if(m=mt(/^tantque\s+(.+)\s+faire$/d)){const n={t:'while',c:m.g(1),b:[]};add(n);st.push({list:n.b,kind:'loop'});continue}
+    if(m=mt(/^pour\s+(\w+)\s+(?:de|<-|←)\s+(.+?)\s+a\s+(.+?)(?:\s+pas\s+(.+?))?\s+faire$/d)){const n={t:'while',c:`${m.g(1)} de ${m.g(2)} à ${m.g(3)}`,b:[]};add(n);st.push({list:n.b,kind:'loop'});continue}
+    if(k==='repeter'){const n={t:'until',c:'',b:[]};add(n);st.push({list:n.b,kind:'loop',node:n});continue}
+    if(m=mt(/^jusqua\s+(.+)$/d)){f.node.c=m.g(1);st.pop();continue}
+    if(m=mt(/^selon\s+(.+?)(?:\s+faire)?$/d)){add({t:'box',x:'Selon '+m.g(1)+' (cas…)'});st.push({list:[],kind:'selon',depth:0});continue}
+    if(m=mt(/^(ecrireln|ecrire|afficher)\s*\((.*)\)$/d)){add({t:'io',x:'Écrire '+m.g(2)});continue}
+    if(m=mt(/^lire\s*\((.+)\)$/d)){add({t:'io',x:'Lire '+m.g(1)});continue}
+    add({t:'box',x:o.replace(/<-|:=/g,'←')});
+  }
+  return root;
+}
+const fmwl=l=>Math.max(40,...l.map(fmw));
+const fext=n=>{const wa=fmwl(n.a),wb=fmwl(n.b);return [Math.max(wa/2+FL.HG/2,FL.DW/2)+wa/2,Math.max(wb/2+FL.HG/2,FL.DW/2)+wb/2]};
+function fmw(n){
+  if(n.t==='if'){const e=fext(n);return 2*Math.max(e[0],e[1])}
+  if(n.t==='while'||n.t==='until')return Math.max(FL.DW,fmwl(n.b))+110;
+  return FL.NW+30;
+}
+function flowSVG(list){
+  const P=[],e2=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const W=Math.round(Math.max(300,fmwl(list)+60)),cx=W/2;
+  const pl=(pts,head)=>P.push(`<polyline points="${pts.map(q=>q.map(v=>Math.round(v)).join(',')).join(' ')}" fill="none" stroke="#334155" stroke-width="1.5"${head?' marker-end="url(#ah)"':''}/>`);
+  const tx=(x,y,t,sz,an,fill)=>P.push(`<text x="${Math.round(x)}" y="${Math.round(y)}" text-anchor="${an||'middle'}" font-family="monospace" font-size="${sz||12}" fill="${fill||'#0f172a'}">${e2(t)}</text>`);
+  const box=(x,y,t,k)=>{
+    const w=FL.NW;
+    if(k==='io')P.push(`<polygon points="${x-w/2+12},${y} ${x+w/2+12},${y} ${x+w/2-12},${y+FL.NH} ${x-w/2-12},${y+FL.NH}" fill="#ecfeff" stroke="#334155" stroke-width="1.5"/>`);
+    else if(k==='term')P.push(`<rect x="${x-65}" y="${y}" width="130" height="34" rx="17" fill="#dcfce7" stroke="#334155" stroke-width="1.5"/>`);
+    else P.push(`<rect x="${x-w/2}" y="${y}" width="${w}" height="${FL.NH}" rx="4" fill="#eef2ff" stroke="#334155" stroke-width="1.5"/>`);
+    tx(x,y+(k==='term'?21:FL.NH/2+4),fcut(t,k==='term'?16:26),12);
+  };
+  const dec=(x,y,t)=>{P.push(`<polygon points="${x},${y} ${x+FL.DW/2},${y+FL.DH/2} ${x},${y+FL.DH} ${x-FL.DW/2},${y+FL.DH/2}" fill="#fef9c3" stroke="#334155" stroke-width="1.5"/>`);tx(x,y+FL.DH/2+4,fcut(t,22),11)};
+  const rl=(l,x,y)=>{let ye=null;l.forEach((n,i)=>{ye=rn(n,x,y);if(i<l.length-1){pl([[x,ye],[x,ye+FL.G]],true);y=ye+FL.G}});return ye};
+  const rn=(n,x,y)=>{
+    if(n.t==='box'||n.t==='io'){box(x,y,n.x,n.t);return y+FL.NH}
+    if(n.t==='if'){
+      dec(x,y,n.c);const cy=y+FL.DH/2,y1=y+FL.DH+FL.G,wa=fmwl(n.a),wb=fmwl(n.b);
+      const xa=x-Math.max(wa/2+FL.HG/2,FL.DW/2),xb=x+Math.max(wb/2+FL.HG/2,FL.DW/2);
+      pl([[x-FL.DW/2,cy],[xa,cy],[xa,y1]],true);tx(xa-6,cy-5,'Oui',11,'end','#15803d');
+      pl([[x+FL.DW/2,cy],[xb,cy],[xb,y1]],true);tx(xb+6,cy-5,'Non',11,'start','#b91c1c');
+      const ya=n.a.length?rl(n.a,xa,y1):y1,yb=n.b.length?rl(n.b,xb,y1):y1,ym=Math.max(ya,yb)+FL.G;
+      pl([[xa,ya],[xa,ym],[x,ym]]);pl([[xb,yb],[xb,ym],[x,ym]]);return ym;
+    }
+    if(n.t==='while'){
+      dec(x,y,n.c);const cy=y+FL.DH/2,y1=y+FL.DH+FL.G,L=Math.max(FL.DW,fmwl(n.b))/2+40;
+      pl([[x,y+FL.DH],[x,y1]],true);tx(x+6,y+FL.DH+16,'Oui',11,'start','#15803d');
+      const yb=n.b.length?rl(n.b,x,y1):y1,yl=yb+FL.G/2,ye=yb+FL.G;
+      pl([[x,yb],[x,yl],[x-L,yl],[x-L,cy],[x-FL.DW/2,cy]],true);
+      pl([[x+FL.DW/2,cy],[x+L,cy],[x+L,ye],[x,ye]]);tx(x+FL.DW/2+8,cy-5,'Non',11,'start','#b91c1c');return ye;
+    }
+    const yb=n.b.length?rl(n.b,x,y):y+FL.NH/2,yd=yb+FL.G,L=Math.max(FL.DW,fmwl(n.b))/2+40,cy=yd+FL.DH/2;
+    pl([[x,yb],[x,yd]],true);dec(x,yd,n.c);
+    pl([[x-FL.DW/2,cy],[x-L,cy],[x-L,y-FL.G/2],[x,y-FL.G/2],[x,y]],true);tx(x-FL.DW/2-8,cy-5,'Non',11,'end','#b91c1c');
+    tx(x+6,yd+FL.DH+16,'Oui',11,'start','#15803d');return yd+FL.DH;
+  };
+  let y=10;box(cx,y,'Début','term');pl([[cx,y+34],[cx,y+34+FL.G]],true);y+=34+FL.G;
+  if(list.length){const ye=rl(list,cx,y);pl([[cx,ye],[cx,ye+FL.G]],true);y=ye+FL.G}
+  box(cx,y,'Fin','term');const H=Math.round(y+34+12);
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#334155"/></marker></defs><rect width="${W}" height="${H}" fill="#ffffff"/>${P.join('')}</svg>`;
+}
+function openFlow(){
+  let svg;
+  try{svg=flowSVG(parseFlow(src.value))}catch(e){openX('Organigramme',`<p class="e">${e.line?`Ligne ${e.line} : `:''}${esc(e.msg||e.message)}</p><p>Corrige d'abord l'algorithme.</p>`);return}
+  openX('Organigramme','<div class="row"><button id="fpng" class="p">Télécharger PNG</button><button id="fsvg">Télécharger SVG</button></div><div class="tree" id="fsv" style="background:#fff"></div><p class="emp">Le schéma montre l\'algorithme principal ; un bloc « selon » est résumé en une seule case.</p>');
+  $('fsv').innerHTML=svg;
+  const dl=(blob,ext)=>{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=progName()+'.'+ext;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
+  $('fsvg').onclick=()=>dl(new Blob([svg],{type:'image/svg+xml'}),'svg');
+  $('fpng').onclick=()=>{
+    const m=svg.match(/width="(\d+)" height="(\d+)"/),w=+m[1],hh=+m[2],img=new Image();
+    img.onload=()=>{const c=document.createElement('canvas');c.width=w*2;c.height=hh*2;const g=c.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,c.width,c.height);g.drawImage(img,0,0,c.width,c.height);c.toBlob(b=>{if(b)dl(b,'png')})};
+    img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+  };
+}
+/* ---------- Labo : liste chaînée et graphe ---------- */
+function labLinked(L){
+  const a=[];let hi=-1,msg='Liste simplement chaînée : chaque maillon pointe vers le suivant.';
+  L.innerHTML=`<div class="row"><input id="kv" placeholder="valeur" size="8"><button id="k1" class="p">Ajouter en tête</button><button id="k2">Ajouter en queue</button><button id="k3">Rechercher</button><button id="k4">Supprimer</button><button id="k5">Vider</button></div><div id="km" class="emp" style="padding:4px 0"></div><div id="ks"></div>`;
+  const draw=()=>{$('km').textContent=msg;$('ks').innerHTML=`<div class="qrow">${a.length?a.map((v,j)=>`<div class="nb${j===hi?' hi':''}">${esc(v)}${j===0?'<small>tête</small>':''}</div><span class="arr">→</span>`).join('')+'<div class="nb" style="opacity:.6">∅</div>':'<div class="emp">Liste vide (tête = ∅)</div>'}</div>`};
+  const val=()=>{const v=$('kv').value.trim();$('kv').value='';return v};
+  const anim=(upto,done)=>{clearInterval(LT);let i=0;LT=setInterval(()=>{if(i>upto){clearInterval(LT);hi=-1;if(done)done();draw();return}hi=i++;draw()},400)};
+  $('k1').onclick=()=>{const v=val();if(!v)return;a.unshift(v);msg=`${v} ajouté en tête : O(1)`;draw()};
+  $('k2').onclick=()=>{const v=val();if(!v)return;msg=`On parcourt jusqu'au dernier maillon, puis on ajoute ${v} : O(n)`;anim(a.length-1,()=>{a.push(v);msg=`${v} ajouté en queue`})};
+  $('k3').onclick=()=>{const v=val();if(!v)return;const i=a.indexOf(v);msg=i<0?`${v} absent (${a.length} maillon(s) parcouru(s))`:`${v} trouvé au maillon n°${i+1}`;anim(i<0?a.length-1:i)};
+  $('k4').onclick=()=>{const v=val();if(!v)return;const i=a.indexOf(v);if(i<0){msg=`${v} absent`;anim(a.length-1);return}msg=`Suppression de ${v} : on relie le maillon précédent au suivant`;anim(i,()=>{a.splice(i,1)})};
+  $('k5').onclick=()=>{clearInterval(LT);a.length=0;hi=-1;msg='Liste vidée';draw()};
+  $('kv').onkeydown=e=>{if(e.key==='Enter')$('k1').click()};
+  draw();
+}
+function labGraph(L){
+  const N=7,names='ABCDEFG'.split('');
+  let E=[[0,1],[0,2],[1,3],[1,4],[2,5],[4,6],[5,6]],vis=new Set(),cur=-1,order=[],msg='Choisis un sommet de départ, puis un parcours.';
+  L.innerHTML=`<div class="row"><label>Départ <select id="gs">${names.map((n,i)=>`<option value="${i}">${n}</option>`).join('')}</select></label><button id="g1" class="p">Largeur (BFS)</button><button id="g2">Profondeur (DFS)</button><button id="g3">Nouveau graphe</button></div><div id="gm" class="emp" style="padding:4px 0"></div><div class="tree" id="gt"></div>`;
+  const PT=i=>[210+110*Math.cos(2*Math.PI*i/N-Math.PI/2),150+110*Math.sin(2*Math.PI*i/N-Math.PI/2)];
+  const adj=()=>{const a=Array.from({length:N},()=>[]);E.forEach(([x,y])=>{a[x].push(y);a[y].push(x)});a.forEach(l=>l.sort((p,q)=>p-q));return a};
+  const draw=()=>{
+    $('gm').textContent=msg;
+    $('gt').innerHTML=`<svg viewBox="0 0 420 300" style="display:block;width:100%;max-width:520px;margin:auto">${E.map(([x,y])=>{const a=PT(x),b=PT(y);return `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" style="stroke:var(--mute);stroke-width:1.5"/>`}).join('')}${names.map((n,i)=>{const q=PT(i),f=i===cur?'var(--op)':vis.has(i)?'color-mix(in srgb,var(--acc) 45%,var(--panel))':'var(--panel)';return `<circle cx="${q[0]}" cy="${q[1]}" r="19" style="fill:${f};stroke:var(--acc);stroke-width:2"/><text x="${q[0]}" y="${q[1]+4}" text-anchor="middle" style="fill:${i===cur?'#111':'var(--ink)'};font:600 13px var(--mono)">${n}</text>${vis.has(i)?`<text x="${q[0]+17}" y="${q[1]-17}" style="fill:var(--ok);font:600 11px var(--mono)">${order.indexOf(i)+1}</text>`:''}`}).join('')}</svg>`;
+  };
+  const go=kind=>{
+    clearInterval(LT);const A=adj(),s=+$('gs').value,steps=[],o=[];
+    if(kind==='bfs'){const q=[s],seen=new Set([s]);while(q.length){const u=q.shift();o.push(u);A[u].forEach(v=>{if(!seen.has(v)){seen.add(v);q.push(v)}});steps.push({u,st:[...q]})}}
+    else{const st=[s],vv=new Set();while(st.length){const u=st.pop();if(vv.has(u))continue;vv.add(u);o.push(u);[...A[u]].reverse().forEach(v=>{if(!vv.has(v))st.push(v)});steps.push({u,st:[...st]})}}
+    vis=new Set();order=[];cur=-1;let i=0;
+    LT=setInterval(()=>{
+      if(i>=steps.length){clearInterval(LT);cur=-1;msg=`Parcours ${kind==='bfs'?'en largeur':'en profondeur'} terminé : ${o.map(x=>names[x]).join(' → ')}`;draw();return}
+      const z=steps[i++];vis.add(z.u);order.push(z.u);cur=z.u;
+      msg=`Visite de ${names[z.u]} · ${kind==='bfs'?'File':'Pile'} : [${z.st.map(x=>names[x]).join(', ')}]`;draw();
+    },650);
+  };
+  $('g1').onclick=()=>go('bfs');$('g2').onclick=()=>go('dfs');
+  $('g3').onclick=()=>{
+    clearInterval(LT);E=[];const has=(a,b)=>E.some(e=>(e[0]===a&&e[1]===b)||(e[0]===b&&e[1]===a));
+    for(let i=1;i<N;i++)E.push([i,Math.floor(Math.random()*i)]);
+    for(let t=0;t<2;t++){const a=Math.floor(Math.random()*N),b=Math.floor(Math.random()*N);if(a!==b&&!has(a,b))E.push([a,b])}
+    vis=new Set();order=[];cur=-1;msg='Nouveau graphe généré.';draw();
+  };
+  draw();
+}
+$('more').onchange=e=>{
+  const v=e.target.value;e.target.value='';
+  if(v==='py')openPy();else if(v==='tests')openTests();else if(v==='flow')openFlow();else if(typeof openLabo==='function'&&v==='labo')openLabo();
+  else if(v==='pdf'){showTab('console');if(isMobile())setM('out');setTimeout(()=>print(),150)}
+};
 
 /* ---------- Visualisation ---------- */
 function cells(o,po,max){
@@ -427,52 +1106,75 @@ function play(){
   if(timer){stopPlay();return}
   if(step>=TRACE.length-1)step=0;
   $('bp').textContent='⏸';
-  timer=setInterval(()=>{if(step>=TRACE.length-1){stopPlay();return}step++;renderViz()},+$('speed').value);
+  timer=setInterval(()=>{if(step>=TRACE.length-1){stopPlay();return}step++;renderViz();if(BP.has(TRACE[step].line))stopPlay()},+$('speed').value);
 }
 const go=n=>{stopPlay();step=n==='end'?TRACE.length-1:n==='start'?0:step+n;renderViz()};
 $('b0').onclick=()=>go('start');$('b1').onclick=()=>go(-1);$('b2').onclick=()=>go(1);$('b3').onclick=()=>go('end');$('bp').onclick=play;
+$('b4').onclick=()=>{stopPlay();let j=step+1;while(j<TRACE.length-1&&!BP.has(TRACE[j].line))j++;step=Math.min(j,TRACE.length-1);renderViz()};
 $('slider').oninput=e=>{stopPlay();step=+e.target.value;renderViz()};
 $('speed').onchange=()=>{if(timer){stopPlay();play()}};
 
 /* ---------- Éditeur ---------- */
-const src=$('src'),LH=21,PAD=12;
+const src=$('src'),PAD=12;let LH=21;const BP=new Set();
+const TEMPLATE='Algorithme Nouveau\nVariable\n  \nDebut\n  \nFin\n';
+let DOCS=[],CUR=0;
+function loadDocs(){
+  try{DOCS=JSON.parse(localStorage.getItem('algodocs')||'[]')}catch(e){DOCS=[]}
+  if(!DOCS.length){let old=null;try{old=localStorage.getItem('algolab')}catch(e){}DOCS=[{n:'Algorithme 1',c:old||PROGS['Tri à bulles']}]}
+  try{CUR=Math.min(+localStorage.getItem('algocur')||0,DOCS.length-1)}catch(e){CUR=0}
+}
+function saveDocs(){try{localStorage.setItem('algodocs',JSON.stringify(DOCS));localStorage.setItem('algocur',CUR)}catch(e){}}
+function drawSel(){$('dsel').innerHTML=DOCS.map((d,i)=>`<option value="${i}"${i===CUR?' selected':''}>${esc(d.n)}</option>`).join('')}
+function switchDoc(i){CUR=i;drawSel();src.value=DOCS[CUR].c;BP.clear();paint();setBar(0);saveDocs();src.scrollTop=0;src.scrollLeft=0;sync()}
+function newDoc(name,code){DOCS.push({n:name,c:code});switchDoc(DOCS.length-1)}
 let CW=8.4;
-function measure(){const s=document.createElement('span');s.style.cssText='position:absolute;visibility:hidden;white-space:pre;font:'+getComputedStyle(src).font;s.textContent='M'.repeat(50);document.body.appendChild(s);CW=s.getBoundingClientRect().width/50;s.remove()}
+function measure(){LH=parseFloat(getComputedStyle(src).lineHeight)||21;const s=document.createElement('span');s.style.cssText='position:absolute;visibility:hidden;white-space:pre;font:'+getComputedStyle(src).font;s.textContent='M'.repeat(50);document.body.appendChild(s);CW=s.getBoundingClientRect().width/50;s.remove()}
 function setBar(line,cls){const b=$('bar');if(!line){b.style.display='none';return}b.style.display='block';b.className=cls||'';b.style.top=(PAD+(line-1)*LH)+'px'}
 function sync(){$('hl').style.transform=`translate(${-src.scrollLeft}px,${-src.scrollTop}px)`;$('gn').style.transform=`translateY(${-src.scrollTop}px)`}
 function paint(){
   const v=src.value,n=v.split('\n').length;
   const bar=$('bar');$('hl').innerHTML=hl(v)+'\n';$('hl').appendChild(bar);
-  $('gn').textContent=Array.from({length:n},(_,i)=>i+1).join('\n');
+  $('gn').innerHTML=Array.from({length:n},(_,i)=>`<span class="${BP.has(i+1)?'bp':''}">${i+1}</span>`).join('\n');
   sync();pos();
 }
 function pos(){const b=src.value.slice(0,src.selectionStart).split('\n');$('pos').textContent=`Ln ${b.length}, Col ${b[b.length-1].length+1} · ${src.value.split('\n').length} lignes`}
-src.addEventListener('input',e=>{paint();hideTip();setBar(0);try{localStorage.setItem('algolab',src.value)}catch(x){}if(e.isTrusted)acUpdate();else acHide()});
+src.addEventListener('input',e=>{paint();hideTip();setBar(0);if(DOCS[CUR]){DOCS[CUR].c=src.value;saveDocs()}if(e.isTrusted)acUpdate();else acHide()});
 src.addEventListener('scroll',()=>{sync();hideTip()});
 ['keyup','click'].forEach(ev=>src.addEventListener(ev,pos));
 /* ---------- Autocomplétion & fermeture automatique ---------- */
 const TPL={algorithme:'Algorithme ¦',variable:'Variable\n  ¦',constante:'Constante\n  ¦',debut:'Debut',fin:'Fin',
   si:'si ¦ alors\n  \nfinsi',tantque:'tantque ¦ faire\n  \nfintantque',pour:'pour i de 1 a ¦ faire\n  \nfinpour',repeter:'repeter\n  ¦\njusqua ',
-  ecrire:'ecrire("¦")',ecrireln:'ecrireln("¦")',afficher:'afficher("¦")',lire:'lire(¦)',table:'table[1..¦] de '};
+  ecrire:'ecrire("¦")',ecrireln:'ecrireln("¦")',afficher:'afficher("¦")',lire:'lire(¦)',table:'table[1..¦] de ',
+  selon:'selon ¦ faire\n  cas 1 :\n    \n  sinon\n    \nfinselon',retourner:'retourner ¦',
+  fonction:'Fonction ¦(n : entier) : entier\nVariable\n  \nDebut\n  \nFinFonction',
+  procedure:'Procedure ¦(a : entier, var b : entier)\nVariable\n  \nDebut\n  \nFinProcedure',
+  finfonction:'FinFonction',finprocedure:'FinProcedure',type:'Type ¦ = Enregistrement\n  \nFinEnregistrement',finenregistrement:'FinEnregistrement'};
+const DISP={finfonction:'FinFonction',finprocedure:'FinProcedure',finenregistrement:'FinEnregistrement'};
 const ITEMS=[],AC={open:false,items:[],i:0,prefix:'',skip:false},PAIR={'(':')','[':']','"':'"',"'":"'"};
 for(const c in KW)KW[c].split(' ').forEach(w=>{
   if(/^(variables|constantes|tableau)$/.test(w))return;
-  const n=c==='struct'?w[0].toUpperCase()+w.slice(1):w;
+  const n=DISP[w]||(c==='struct'?w[0].toUpperCase()+w.slice(1):w);
   ITEMS.push({n,k:c,key:w,t:TPL[w]||(c==='fn'?w+'(¦)':n)});
 });
 function declared(){
-  const s=new Set();
+  const s=new Set();let body=false;
   for(const l of src.value.split('\n')){
-    if(/^\s*debut\b/i.test(strip(l)))break;
+    const k=strip(l).trim().toLowerCase();
+    if(/^debut\b/.test(k)){body=true;continue}
+    if(/^fin(fonction|procedure)?$/.test(k)){body=false;continue}
+    const f=l.match(/^\s*(?:fonction|procedure)\s+(\w+)\s*\(([^)]*)\)/i);
+    if(f){s.add(f[1]);f[2].split(/[,;]/).forEach(t=>{const n=t.replace(/^\s*var\s+/i,'').split(':')[0].trim();if(/^[A-Za-z_]\w*$/.test(n))s.add(n)});continue}
+    if(body)continue;
     let m=l.match(/^\s*([A-Za-z_]\w*(?:\s*,\s*[A-Za-z_]\w*)*)\s*:(?!=)\s*\S/);
     if(m)m[1].split(',').forEach(x=>s.add(x.trim()));
     else if(m=l.match(/^\s*([A-Za-z_]\w*)\s*(?:=|<-|:=)/))s.add(m[1]);
   }
   return s;
 }
+let INSIDE=false;
 function ins(t,back=0){
-  src.focus();
-  if(!document.execCommand('insertText',false,t)){src.setRangeText(t,src.selectionStart,src.selectionEnd,'end');src.dispatchEvent(new Event('input'))}
+  src.focus();INSIDE=true;
+  try{if(!document.execCommand('insertText',false,t)){src.setRangeText(t,src.selectionStart,src.selectionEnd,'end');src.dispatchEvent(new Event('input'))}}finally{INSIDE=false}
   if(back){const p=src.selectionStart-back;src.setSelectionRange(p,p)}
   pos();
 }
@@ -501,9 +1203,8 @@ function acAccept(force){
   const raw=it.t.replace(/\n/g,'\n'+ind),i=raw.indexOf('¦'),txt=raw.replace('¦','');
   AC.skip=true;src.setSelectionRange(s-AC.prefix.length,s);ins(txt,i<0?0:txt.length-i);AC.skip=false;acHide();return true;
 }
-function autoPair(e){
-  if(e.ctrlKey||e.metaKey||e.altKey||e.key.length!==1)return;
-  const v=src.value,s=src.selectionStart,en=src.selectionEnd,ch=e.key,nx=v[en]||'',lb=v.slice(v.lastIndexOf('\n',s-1)+1,s);
+function autoPair(e,ch){
+  const v=src.value,s=src.selectionStart,en=src.selectionEnd,nx=v[en]||'',lb=v.slice(v.lastIndexOf('\n',s-1)+1,s);
   if((ch===')'||ch===']')&&s===en&&nx===ch){e.preventDefault();src.setSelectionRange(s+1,s+1);return}
   if(!(ch in PAIR))return;
   if(s!==en){e.preventDefault();ins(ch+v.slice(s,en)+PAIR[ch],1);return}
@@ -518,7 +1219,19 @@ function autoPair(e){
   e.preventDefault();
   if(ch==='('&&/\b(ecrireln|ecrire|afficher)$/i.test(strip(lb)))ins('("")',2);else ins(ch+PAIR[ch],1);
 }
-$('ac').addEventListener('mousedown',e=>{e.preventDefault();const d=e.target.closest('.it');if(d){AC.i=+d.dataset.j;acAccept(true)}});
+function indentEnter(e){
+  const v=src.value,s=src.selectionStart,lb=v.slice(v.lastIndexOf('\n',s-1)+1,s),ind=lb.match(/^[ \t]*/)[0],kk=strip(lb).trim().toLowerCase().replace(/\s+/g,' ');
+  const open=/^(si .* alors|sinon|sinon si .* alors|tantque .* faire|pour .* faire|repeter|selon .*|cas .*:|debut|variables?|constantes?|(fonction|procedure) .*|type .*enregistrement)$/.test(kk);
+  e.preventDefault();ins('\n'+ind+(open?'  ':''));
+}
+function pairDelete(e){
+  const s=src.selectionStart,v=src.value;
+  if(s===src.selectionEnd&&s>0&&PAIR[v[s-1]]&&PAIR[v[s-1]]===v[s]){
+    e.preventDefault();src.setSelectionRange(s-1,s+1);INSIDE=true;
+    try{if(!document.execCommand('delete')){src.setRangeText('');src.dispatchEvent(new Event('input'))}}finally{INSIDE=false}
+  }
+}
+$('ac').addEventListener('pointerdown',e=>{e.preventDefault();const d=e.target.closest('.it');if(d){AC.i=+d.dataset.j;acAccept(true)}});
 src.addEventListener('blur',acHide);src.addEventListener('click',acHide);
 src.addEventListener('keydown',e=>{
   if(AC.open){
@@ -529,12 +1242,14 @@ src.addEventListener('keydown',e=>{
   }
   if(e.key===' '&&e.ctrlKey){e.preventDefault();acUpdate();return}
   if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)){e.preventDefault();$('run').click();return}
-  if(e.key==='Backspace'&&src.selectionStart===src.selectionEnd){
-    const s=src.selectionStart,v=src.value;
-    if(s>0&&PAIR[v[s-1]]&&PAIR[v[s-1]]===v[s]){e.preventDefault();src.setSelectionRange(s-1,s+1);if(!document.execCommand('delete')){src.setRangeText('');src.dispatchEvent(new Event('input'))}return}
-  }
   if(e.key==='Tab'){e.preventDefault();ins('  ');return}
-  autoPair(e);
+});
+src.addEventListener('beforeinput',e=>{
+  if(INSIDE||e.isComposing)return;
+  const t=e.inputType;
+  if(t==='insertText'&&e.data&&e.data.length===1)autoPair(e,e.data);
+  else if(t==='insertLineBreak'||t==='insertParagraph')indentEnter(e);
+  else if(t==='deleteContentBackward')pairDelete(e);
 });
 function setCode(t){src.value=t;src.dispatchEvent(new Event('input'));src.scrollTop=0}
 
@@ -542,28 +1257,61 @@ function setCode(t){src.value=t;src.dispatchEvent(new Event('input'));src.scroll
 const tip=$('tip');
 function entryHTML(e){return `<b>${esc(e[2])}</b> <small>${CATN[e[1]]}</small><p>${esc(e[3])}</p><pre>${hl(e[4])}</pre>`}
 function hideTip(){tip.style.display='none'}
-src.addEventListener('mousemove',e=>{
-  const r=src.getBoundingClientRect(),ln=Math.floor((e.clientY-r.top-PAD+src.scrollTop)/LH),col=Math.floor((e.clientX-r.left-PAD+src.scrollLeft)/CW);
+let TT;
+function tipAt(X,Y){
+  const r=src.getBoundingClientRect(),ln=Math.floor((Y-r.top-PAD+src.scrollTop)/LH),col=Math.floor((X-r.left-PAD+src.scrollLeft)/CW);
   const line=src.value.split('\n')[ln];if(line===undefined||col<0){hideTip();return}
   const t=tok(line).find(k=>col>=k.s&&col<k.e&&k.c&&k.c!=='com'&&k.c!=='str'&&k.c!=='num');
   const d=t&&MAP[t.c==='op'&&!/^\w/.test(t.x)?t.x:strip(t.x).toLowerCase()];
   if(!d){hideTip();return}
   tip.innerHTML=entryHTML(d);tip.style.display='block';
-  const w=tip.offsetWidth,h=tip.offsetHeight;
-  tip.style.left=Math.min(e.clientX+14,innerWidth-w-8)+'px';tip.style.top=(e.clientY+h+24>innerHeight?e.clientY-h-12:e.clientY+18)+'px';
-});
+  const w=tip.offsetWidth,hh=tip.offsetHeight;
+  tip.style.left=Math.max(4,Math.min(X+14,innerWidth-w-8))+'px';tip.style.top=(Y+hh+24>innerHeight?Math.max(4,Y-hh-12):Y+18)+'px';
+}
+src.addEventListener('mousemove',e=>{if(!matchMedia('(hover:none)').matches)tipAt(e.clientX,e.clientY)});
+src.addEventListener('click',e=>{if(matchMedia('(hover:none)').matches){tipAt(e.clientX,e.clientY);clearTimeout(TT);TT=setTimeout(hideTip,4500)}});
 src.addEventListener('mouseleave',hideTip);
 
 /* ---------- Onglets, thèmes, documentation ---------- */
 function showTab(t){document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('on',p.id==='pane-'+t))}
 document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>showTab(b.dataset.t));
-$('theme').onchange=e=>{document.documentElement.dataset.theme=e.target.value;try{localStorage.setItem('algotheme',e.target.value)}catch(x){}};
+const TCOL={nuit:'#1f1f1f',clair:'#ffffff',dracula:'#21222c'};
+$('theme').onchange=e=>{document.documentElement.dataset.theme=e.target.value;const mt=document.querySelector('meta[name=theme-color]');if(mt)mt.content=TCOL[e.target.value]||'#1f1f1f';try{localStorage.setItem('algotheme',e.target.value)}catch(x){}};
 try{const t=localStorage.getItem('algotheme');if(t){document.documentElement.dataset.theme=t;$('theme').value=t}}catch(e){}
-$('run').onclick=()=>{run();showTab('console')};
-$('viz').onclick=()=>{if(run()||TRACE.length){showTab('viz');if(TRACE.length>1)play()}};
-$('ex').onclick=()=>setCode(PROGS['Tri à bulles']);
+const MAIN=document.querySelector('main'),isMobile=()=>matchMedia('(max-width:860px)').matches;
+function setM(m){MAIN.dataset.m=m;document.querySelectorAll('#mnav [data-m]').forEach(b=>b.classList.toggle('on',b.dataset.m===m))}
+setM('edit');
+document.querySelectorAll('#mnav [data-m]').forEach(b=>b.onclick=()=>setM(b.dataset.m));
+$('mrun').onclick=()=>$('run').click();$('mviz').onclick=()=>$('viz').click();
+const HD=document.querySelector('header');
+$('menu').onclick=()=>{const o=HD.classList.toggle('open');$('menu').setAttribute('aria-expanded',o)};
+$('tools').addEventListener('click',e=>{if(e.target.closest('button,label.btn'))HD.classList.remove('open')});
+$('tools').addEventListener('change',()=>HD.classList.remove('open'));
+const SYM=[['⇥','  ',0],['(','()',1],[')',')',0],['[','[]',1],[']',']',0],['"','""',1],['←','<-',0],['≠','<>',0],['≤','<=',0],['≥','>=',0],[':',':',0],[',',',',0],['=','=',0]];
+$('sym').innerHTML=SYM.map((s,j)=>`<button data-j="${j}">${s[0]}</button>`).join('');
+$('sym').addEventListener('pointerdown',e=>e.preventDefault());
+$('sym').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  const [lab,t,back]=SYM[+b.dataset.j],v=src.value,s=src.selectionStart;
+  if((t===')'||t===']')&&v[s]===t&&s===src.selectionEnd){src.focus();src.setSelectionRange(s+1,s+1);return}
+  if(lab==='('&&/\b(ecrireln|ecrire|afficher)$/i.test(strip(v.slice(v.lastIndexOf('\n',s-1)+1,s)))){ins('("")',2);return}
+  ins(t,back);
+});
+$('gn').parentElement.addEventListener('click',e=>{
+  const r=src.getBoundingClientRect(),ln=Math.floor((e.clientY-r.top-PAD+src.scrollTop)/LH)+1;
+  if(ln<1||ln>src.value.split('\n').length)return;
+  BP.has(ln)?BP.delete(ln):BP.add(ln);paint();
+});
+$('run').onclick=()=>{run();showTab('console');if(isMobile())setM('out')};
+$('viz').onclick=()=>{const ok=run();if(isMobile())setM('out');if(ok||TRACE.length){showTab('viz');if(TRACE.length>1)play()}};
+$('ex').onclick=()=>newDoc('Tri à bulles',PROGS['Tri à bulles']);
 $('exp').onclick=()=>{const nm=(src.value.match(/algorithme\s+(\w+)/i)||[0,'algorithme'])[1],a=document.createElement('a');a.href=URL.createObjectURL(new Blob([src.value],{type:'text/plain'}));a.download=nm+'.alg';a.click();URL.revokeObjectURL(a.href)};
-$('imp').onchange=e=>{const f=e.target.files[0];if(f)f.text().then(t=>{setCode(t);e.target.value=''})};
+$('share').onclick=()=>{
+  const u=location.href.split('#')[0]+'#c='+btoa(unescape(encodeURIComponent(src.value)));
+  const ask=()=>prompt('Copie ce lien (il ouvre ton algorithme) :',u);
+  if(navigator.clipboard)navigator.clipboard.writeText(u).then(()=>{$('status').textContent='Lien copié dans le presse-papiers'},ask);else ask();
+};
+$('imp').onchange=e=>{const f=e.target.files[0];if(f)f.text().then(t=>{newDoc(f.name.replace(/\.\w+$/,''),t);e.target.value=''})};
 
 function docHTML(){
   const leg=[['struct','Structure'],['ctrl','Contrôle'],['type','Types'],['io','Entrées/sorties'],['fn','Fonctions'],['op','Opérateurs'],['bool','Vrai/Faux'],['num','Nombres'],['str','"Textes"'],['com','// Commentaires']];
@@ -572,24 +1320,80 @@ function docHTML(){
   <li><b>Visualiser</b> rejoue l'exécution pas à pas : ligne en cours surlignée, variables en cartes, tables en cellules avec barres. Les valeurs modifiées à chaque étape sont encadrées. Contrôles : lecture/pause, précédent/suivant, curseur, vitesse.</li>
   <li><b>Survol</b> : passe la souris sur un mot-clé, un type, une fonction ou un opérateur pour voir sa description et un exemple.</li>
   <li><b>Autocomplétion</b> : dès les premières lettres, une liste propose mots-clés, types, fonctions et <b>variables déclarées</b> (↑ ↓ pour choisir, Tab ou Entrée pour valider, Échap pour fermer, Ctrl+Espace pour la rouvrir). Les structures se complètent entièrement : <code>si</code> → <code>si … alors … finsi</code>, <code>pour</code>, <code>tantque</code>, <code>repeter</code>, <code>ecrire("")</code>…</li>
+  <li><b>Sous-programmes</b> : <code>Fonction nom(p : type) : type … retourner … FinFonction</code> et <code>Procedure nom(var p : type) … FinProcedure</code> (placés hors du bloc principal). Les fonctions peuvent être récursives, <code>var</code> passe par référence, les tables sont passées par référence. La visualisation suit le programme principal.</li>
+  <li><b>Entrées préparées</b> : dans l'onglet Console, saisis les valeurs (une par ligne) ; <code>lire</code> les consomme sans boîte de dialogue, puis demande la suite si la liste est vide.</li>
+  <li><b>Outils</b> (menu « Outils… ») : <b>Traduire en Python</b> (copie ou fichier .py), <b>Jeux de tests</b> (entrées, sorties attendues, ✓/✗) avec un <b>graphique de complexité</b> (instructions exécutées selon n), <b>Labo</b> (piles, files, listes chaînées, arbres binaires avec suppression, graphes BFS/DFS, tris animés) et <b>Exporter en PDF</b> (via l'impression du navigateur).</li>
+  <li><b>Plusieurs algorithmes</b> : la liste en haut de l'éditeur permet de changer d'algorithme ; ＋ en crée un, ✎ le renomme, 🗑 le supprime. Tout est enregistré dans ton navigateur.</li>
+  <li><b>Organigramme</b> (menu Outils) : génère le schéma de l'algorithme principal, avec export en image PNG ou en SVG. <b>Langues</b> : le menu de langue traduit l'interface (français, anglais, arabe) ; <b>A− / A+</b> règle la taille du texte de l'éditeur.</li>
+  <li><b>Points d'arrêt</b> : touche un numéro de ligne dans la marge pour poser un point rouge ; la lecture de la visualisation s'y arrête, et le bouton ●▶ saute au suivant.</li>
+  <li><b>Téléphone</b> : deux écrans (Éditeur / Résultats) avec une barre en bas, une barre de symboles au-dessus du clavier, un menu ☰ et des infobulles au toucher sur les mots-clés.</li>
+  <li><b>Types structurés</b> : <code>Type Nom = Enregistrement … FinEnregistrement</code>, champs lus ou écrits avec <code>variable.champ</code>.</li>
+  <li><b>Indentation automatique</b> après Entrée, <b>compteur d'instructions</b> dans la barre d'état, et bouton <b>Partager</b> qui copie un lien contenant ton algorithme (fonctionne une fois l'application hébergée).</li>
   <li><b>Fermeture automatique</b> : <code>(</code> <code>[</code> <code>"</code> <code>'</code> ajoutent leur symbole fermant ; taper le symbole fermant le saute ; Retour arrière efface la paire vide. Après <code>ecrire</code>, <code>ecrireln</code> ou <code>afficher</code>, taper <code>(</code> donne <code>("")</code> avec le curseur entre les guillemets.</li>
   <li><b>Thèmes</b> Nuit, Clair, Dracula ; <b>Exporter / Importer</b> des fichiers .alg ; sauvegarde automatique dans le navigateur.</li>
   <li>Les erreurs de syntaxe ou d'exécution indiquent la ligne concernée. Une boucle infinie est interrompue automatiquement.</li></ul>
   <h3>Couleurs de la syntaxe</h3><div class="leg">${leg.map(l=>`<span class="t-${l[0]}">${esc(l[1])}</span>`).join('')}</div>`;
   for(const c in CATN){h+=`<h3>${CATN[c]}</h3><div class="grid">${D.filter(e=>e[1]===c).map(e=>`<div class="dcard"><b class="t-${c}">${esc(e[2])}</b><p>${esc(e[3])}</p><pre>${hl(e[4])}</pre></div>`).join('')}</div>`}
   h+=`<h3>Programmes d'exemple</h3><div class="grid">${Object.keys(PROGS).map(k=>`<div class="dcard"><b>${esc(k)}</b><pre>${hl(PROGS[k].split('\n').slice(0,8).join('\n'))}\n…</pre><button data-p="${esc(k)}">Charger dans l'éditeur</button></div>`).join('')}</div>
-  <h3>À propos</h3><p>AlgoLab est une application réalisée par <b>EL HASSAK IMAD</b> : un studio local, sans serveur, pour écrire, tester et visualiser des algorithmes en pseudo-code français.</p><h3>Bon à savoir</h3><ul><li>Les noms de variables sont sensibles à la casse. Les indices (tables comme chaînes : <code>mot[i]</code>) commencent à 1 ; on peut lire un caractère mais pas le modifier.</li><li>Commentaire : <code>// texte</code>. Tables à deux dimensions : <code>m[i][j]</code>.</li></ul>`;
+  <h3>À propos</h3><p>AlgoLab est une application réalisée par <b>EL HASSAK IMAD</b> : un studio local, sans serveur, pour écrire, tester et visualiser des algorithmes en pseudo-code français.</p><h3>Bon à savoir</h3><ul><li>Les noms de variables sont sensibles à la casse. Les indices (tables comme chaînes : <code>mot[i]</code>) commencent à 1 ; <code>mot[i] &lt;- "x"</code> modifie un caractère.</li><li>Commentaire : <code>// texte</code>. Tables à deux dimensions : <code>m[i][j]</code>.</li></ul>`;
   return h;
 }
 $('doc').onclick=()=>{$('dbody').innerHTML=docHTML();$('dlg').showModal()};
 $('dclose').onclick=()=>$('dlg').close();
-$('dbody').onclick=e=>{const p=e.target.dataset&&e.target.dataset.p;if(p){setCode(PROGS[p]);$('dlg').close()}};
+$('dbody').onclick=e=>{const p=e.target.dataset&&e.target.dataset.p;if(p){newDoc(p,PROGS[p]);$('dlg').close()}};
 $('dlg').onclick=e=>{if(e.target===$('dlg'))$('dlg').close()};
 
 /* ---------- Démarrage ---------- */
 measure();
-let init=PROGS['Tri à bulles'];try{init=localStorage.getItem('algolab')||init}catch(e){}
-setCode(init);
+loadDocs();
+let FS=0;try{FS=parseInt(localStorage.getItem('algofs'))||0}catch(e){}
+function setFS(n){
+  FS=Math.max(11,Math.min(24,n));const r=document.documentElement.style;
+  r.setProperty('--fs',FS+'px');r.setProperty('--lh',Math.round(FS*1.5)+'px');
+  try{localStorage.setItem('algofs',FS)}catch(e){}
+  measure();paint();
+}
+if(FS)setFS(FS);
+try{if(location.hash.startsWith('#c='))newDoc('Partagé',decodeURIComponent(escape(atob(location.hash.slice(3)))));else switchDoc(CUR)}catch(e){switchDoc(CUR)}
+$('dsel').onchange=e=>switchDoc(+e.target.value);
+$('dnew').onclick=()=>newDoc('Algorithme '+(DOCS.length+1),TEMPLATE);
+$('dren').onclick=()=>{const n=prompt("Nom de l'algorithme :",DOCS[CUR].n);if(n&&n.trim()){DOCS[CUR].n=n.trim();drawSel();saveDocs()}};
+$('ddel').onclick=()=>{
+  if(!confirm('Supprimer « '+DOCS[CUR].n+' » ?'))return;
+  if(DOCS.length===1){DOCS[0]={n:'Algorithme 1',c:TEMPLATE};switchDoc(0)}else{DOCS.splice(CUR,1);switchDoc(Math.max(0,CUR-1))}
+};
+$('fm').onclick=()=>setFS((FS||parseFloat(getComputedStyle(src).fontSize)||14)-1);
+$('fp').onclick=()=>setFS((FS||parseFloat(getComputedStyle(src).fontSize)||14)+1);
+src.addEventListener('focus',()=>{if(isMobile())document.body.classList.add('typing')});
+src.addEventListener('blur',()=>document.body.classList.remove('typing'));
+$('fab').onpointerdown=e=>e.preventDefault();
+$('fab').onclick=()=>$('run').click();
+let SW=null;
+[$('rbox'),document.querySelector('#lbox .sb')].forEach(el=>{
+  if(!el||!el.addEventListener)return;
+  el.addEventListener('touchstart',e=>{SW={x:e.touches[0].clientX,y:e.touches[0].clientY}},{passive:true});
+  el.addEventListener('touchend',e=>{
+    if(!SW||!isMobile())return;
+    const t=e.changedTouches[0],dx=t.clientX-SW.x,dy=t.clientY-SW.y;SW=null;
+    if(Math.abs(dx)>90&&Math.abs(dy)<45){if(dx>0&&el===$('rbox'))setM('edit');else if(dx<0&&el!==$('rbox'))setM('out')}
+  },{passive:true});
+});
+/* ---------- Langues de l'interface ---------- */
+const I18N={
+ en:{'Documentation':'Documentation','Exemple':'Example','Partager':'Share','Exporter':'Export','Importer':'Import','Visualiser':'Visualize','▶ Exécuter':'▶ Run','Console':'Console','Variables':'Variables','Visualisation':'Visualization','✎ Éditeur':'✎ Editor','◉ Visualiser':'◉ Visualize','▤ Résultats':'▤ Results','Outils…':'Tools…','Traduire en Python':'Translate to Python','Jeux de tests et complexité':'Tests and complexity','Organigramme':'Flowchart','Labo : structures de données':'Lab: data structures','Exporter en PDF':'Export as PDF','Thème Nuit':'Night theme','Thème Clair':'Light theme','Thème Dracula':'Dracula theme','Fermer':'Close','Lent':'Slow','Normal':'Normal','Rapide':'Fast'},
+ ar:{'Documentation':'التوثيق','Exemple':'مثال','Partager':'مشاركة','Exporter':'تصدير','Importer':'استيراد','Visualiser':'تصوّر','▶ Exécuter':'▶ تشغيل','Console':'الطرفية','Variables':'المتغيرات','Visualisation':'التصوّر','✎ Éditeur':'✎ المحرر','◉ Visualiser':'◉ تصوّر','▤ Résultats':'▤ النتائج','Outils…':'أدوات…','Traduire en Python':'ترجمة إلى بايثون','Jeux de tests et complexité':'اختبارات وتعقيد','Organigramme':'مخطط انسيابي','Labo : structures de données':'مختبر: بنى البيانات','Exporter en PDF':'تصدير PDF','Thème Nuit':'سمة ليلية','Thème Clair':'سمة فاتحة','Thème Dracula':'سمة دراكولا','Fermer':'إغلاق','Lent':'بطيء','Normal':'عادي','Rapide':'سريع'}
+};
+function applyLang(l){
+  document.documentElement.lang=l;const d=I18N[l]||{};
+  document.querySelectorAll('#doc,#ex,#share,#exp,#viz,#run,#mrun,#mviz,#xclose,#dclose,.tabs button,#mnav [data-m],#more option,#theme option,#speed option').forEach(el=>{
+    if(el.dataset.fr===undefined)el.dataset.fr=el.textContent;
+    el.textContent=d[el.dataset.fr]||el.dataset.fr;
+  });
+  const lb=document.querySelector('label.btn');
+  if(lb&&lb.firstChild){if(lb.dataset.fr===undefined)lb.dataset.fr=lb.firstChild.nodeValue;lb.firstChild.nodeValue=d[lb.dataset.fr]||lb.dataset.fr}
+}
+$('lang').onchange=e=>{applyLang(e.target.value);try{localStorage.setItem('algolang',e.target.value)}catch(x){}};
+try{const l=localStorage.getItem('algolang');if(l&&l!=='fr'){$('lang').value=l;applyLang(l)}}catch(e){}
 addEventListener('resize',()=>{measure();sync()});
 </script>
 </body>
