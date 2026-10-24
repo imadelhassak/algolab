@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<!-- AlgoLab – Application réalisée par EL HASSAK IMAD -->
+<html lang="fr" data-theme="nuit">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AlgoLab – Studio d'algorithmes · par EL HASSAK IMAD</title>
+<meta name="author" content="EL HASSAK IMAD">
+<style>
+:root{--mono:ui-monospace,"Cascadia Code","JetBrains Mono",Consolas,Menlo,monospace;--ui:system-ui,-apple-system,"Segoe UI",sans-serif}
+[data-theme=nuit]{--bg:#181818;--panel:#1f1f1f;--edit:#1e1e1e;--ink:#d4d4d4;--mute:#8b8b8b;--line:#333;--acc:#3794ff;--accink:#fff;--err:#f48771;--ok:#6ccb8b;--cur:#ffffff12;--errbg:#f4877126;
+--struct:#c586c0;--ctrl:#569cd6;--type:#4ec9b0;--io:#4fc1ff;--fn:#dcdcaa;--op:#d7ba7d;--bool:#ff8c69;--num:#b5cea8;--str:#ce9178;--com:#6a9955;color-scheme:dark}
+[data-theme=clair]{--bg:#eef0f3;--panel:#fff;--edit:#fff;--ink:#1f2328;--mute:#6a737d;--line:#d8dce1;--acc:#0b5fff;--accink:#fff;--err:#c62828;--ok:#1b7a43;--cur:#0b5fff14;--errbg:#c6282822;
+--struct:#af00db;--ctrl:#0000ff;--type:#267f99;--io:#0070c1;--fn:#795e26;--op:#b15c00;--bool:#d14000;--num:#098658;--str:#a31515;--com:#008000;color-scheme:light}
+[data-theme=dracula]{--bg:#1c1d26;--panel:#21222c;--edit:#282a36;--ink:#f8f8f2;--mute:#8b93b8;--line:#3a3d4f;--acc:#bd93f9;--accink:#1c1d26;--err:#ff6e6e;--ok:#50fa7b;--cur:#ffffff14;--errbg:#ff6e6e2a;
+--struct:#bd93f9;--ctrl:#ff79c6;--type:#8be9fd;--io:#50fa7b;--fn:#f1fa8c;--op:#ffb86c;--bool:#ff9580;--num:#ffb86c;--str:#f1fa8c;--com:#6272a4;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 var(--ui);display:flex;flex-direction:column}
+header{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:8px 12px;background:var(--panel);border-bottom:1px solid var(--line)}
+.logo{font:700 16px var(--mono);margin-right:auto;display:flex;gap:8px;align-items:center}
+.logo small{font:400 12px var(--ui);color:var(--mute);border-left:1px solid var(--line);padding-left:8px}
+.logo i{font-style:normal;background:var(--acc);color:var(--accink);border-radius:5px;padding:1px 6px}
+button,select,label.btn{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:5px 10px;border-radius:6px;cursor:pointer}
+button:hover,select:hover,label.btn:hover{border-color:var(--acc)}
+:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+button.p{background:var(--acc);color:var(--accink);border-color:var(--acc);font-weight:600}
+main{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:8px;padding:8px}
+@media(max-width:860px){main{grid-template-columns:1fr;grid-auto-rows:minmax(420px,auto)}}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:8px;display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.ed{flex:1;display:flex;min-height:0;background:var(--edit)}
+.gut{width:46px;overflow:hidden;border-right:1px solid var(--line);color:var(--mute);font:14px/21px var(--mono);text-align:right;user-select:none}
+#gn{margin:0;padding:12px 8px 12px 0;font:inherit}
+.code{position:relative;flex:1;min-width:0}
+.lay{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+#hl,#src{font:14px/21px var(--mono);padding:12px;margin:0;tab-size:2;white-space:pre}
+#hl{position:absolute;left:0;top:0;min-width:100%;color:var(--ink)}
+#bar{position:absolute;left:0;right:0;height:21px;background:var(--cur);display:none}
+#bar.err{background:var(--errbg);box-shadow:inset 3px 0 var(--err)}
+#src{position:absolute;inset:0;width:100%;height:100%;border:0;resize:none;background:transparent;color:transparent;caret-color:var(--ink);overflow:auto;outline:0}
+#src::selection{background:#3794ff55}
+.sb{display:flex;justify-content:space-between;gap:12px;padding:3px 12px;font-size:12px;color:var(--mute);border-top:1px solid var(--line)}
+.t-struct{color:var(--struct);font-weight:600}.t-ctrl{color:var(--ctrl)}.t-type{color:var(--type)}.t-io{color:var(--io)}.t-fn{color:var(--fn)}
+.t-op{color:var(--op)}.t-bool{color:var(--bool)}.t-num{color:var(--num)}.t-str{color:var(--str)}.t-com{color:var(--com);font-style:italic}
+.tabs{display:flex;border-bottom:1px solid var(--line)}
+.tabs button{border:0;border-radius:0;background:none;color:var(--mute);padding:8px 14px;border-bottom:2px solid transparent}
+.tabs button.on{color:var(--ink);border-bottom-color:var(--acc)}
+.pane{display:none;flex:1;min-height:0;overflow:auto}.pane.on{display:block}
+#out{margin:0;padding:12px;font:13px/1.5 var(--mono);white-space:pre-wrap}
+.e{color:var(--err)}
+table{border-collapse:collapse;width:100%;font:13px var(--mono)}
+td,th{text-align:left;padding:5px 12px;border-bottom:1px solid var(--line);vertical-align:top;word-break:break-word}th{color:var(--mute);font-weight:500}
+.emp{color:var(--mute);padding:14px}
+.ctl{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:8px 10px;border-bottom:1px solid var(--line)}
+.ctl input[type=range]{flex:1;min-width:90px;accent-color:var(--acc)}
+.vz{padding:10px}.vz h4{margin:12px 0 6px;font-size:12px;color:var(--mute);font-weight:600}
+.cards{display:flex;flex-wrap:wrap;gap:6px}
+.card{min-width:84px;border:1px solid var(--line);border-radius:6px;padding:4px 10px;background:var(--edit);transition:background .3s,border-color .3s}
+.card span{color:var(--mute);font:12px var(--mono);display:block}.card b{font:600 15px var(--mono)}.card small{display:block;color:var(--mute);font-size:11px}
+.card.ch,.cell.ch{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 22%,transparent)}
+.trow{display:flex;flex-wrap:wrap;gap:4px;align-items:flex-end;margin-bottom:6px}
+.cell{width:46px;border:1px solid var(--line);border-radius:5px;text-align:center;padding:3px 2px;background:var(--edit);transition:background .3s}
+.cell .bar{background:var(--acc);opacity:.55;border-radius:2px;margin:0 6px 3px}.cell b{font:600 13px var(--mono);display:block}.cell small{color:var(--mute);font:11px var(--mono)}
+#vline{font:13px var(--mono);padding:6px 10px;border-radius:5px;background:var(--cur);margin-bottom:6px}
+#vout{margin:0;font:13px var(--mono);white-space:pre-wrap;background:var(--edit);border:1px solid var(--line);border-radius:6px;padding:8px;min-height:36px}
+#tip{position:fixed;z-index:9;max-width:340px;background:var(--panel);border:1px solid var(--acc);border-radius:8px;padding:8px 12px;box-shadow:0 8px 24px #0006;display:none;pointer-events:none;font-size:13px}
+#tip b{font:600 13px var(--mono)}#tip p{margin:4px 0}#tip pre,.dcard pre{margin:4px 0 0;font:12px/1.5 var(--mono);background:var(--edit);padding:6px 8px;border-radius:5px;white-space:pre-wrap}
+#tip small{color:var(--mute)}
+dialog{width:min(960px,94vw);height:88vh;padding:0;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink)}
+dialog::backdrop{background:#0009}
+.dh{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:10px 16px;background:var(--panel);border-bottom:1px solid var(--line)}
+.dh h2{margin:0;font-size:16px}.db{padding:4px 18px 24px}.db h3{margin:22px 0 8px;font-size:15px;border-bottom:1px solid var(--line);padding-bottom:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:8px}
+.dcard{border:1px solid var(--line);border-radius:8px;padding:8px 12px;background:var(--bg)}.dcard b{font-family:var(--mono)}.dcard p{margin:4px 0}
+.leg{display:flex;flex-wrap:wrap;gap:10px;font:13px var(--mono)}
+.db li{margin:4px 0}.db ul{padding-left:20px}
+#ac{position:fixed;z-index:10;display:none;min-width:210px;max-height:240px;overflow:auto;background:var(--panel);border:1px solid var(--acc);border-radius:8px;box-shadow:0 8px 24px #0006;font:13px var(--mono);padding:3px}
+#ac .it{display:flex;justify-content:space-between;gap:18px;padding:3px 9px;border-radius:5px;cursor:pointer}
+#ac .it.on{background:color-mix(in srgb,var(--acc) 28%,transparent)}#ac small{color:var(--mute);font-family:var(--ui)}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo"><i>&lt;/&gt;</i> AlgoLab <small>Réalisé par EL HASSAK IMAD</small></div>
+  <select id="theme" aria-label="Thème"><option value="nuit">Thème Nuit</option><option value="clair">Thème Clair</option><option value="dracula">Thème Dracula</option></select>
+  <button id="doc">Documentation</button>
+  <button id="ex">Exemple</button>
+  <button id="exp">Exporter</button>
+  <label class="btn">Importer<input id="imp" type="file" accept=".alg,.txt" hidden></label>
+  <button id="viz">Visualiser</button>
+  <button class="p" id="run" title="Ctrl+Entrée">▶ Exécuter</button>
+</header>
+<main>
+  <div class="box">
+    <div class="ed">
+      <div class="gut"><pre id="gn"></pre></div>
+      <div class="code"><div class="lay"><pre id="hl"><i id="bar"></i></pre></div><textarea id="src" spellcheck="false" aria-label="Code de l'algorithme"></textarea></div>
+    </div>
+    <div class="sb"><span id="pos"></span><span>© EL HASSAK IMAD</span><span id="status"></span></div>
+  </div>
+  <div class="box">
+    <div class="tabs"><button class="on" data-t="console">Console</button><button data-t="vars">Variables</button><button data-t="viz">Visualisation</button></div>
+    <div class="pane on" id="pane-console"><pre id="out">Appuie sur « Exécuter » (Ctrl+Entrée).
+
+AlgoLab · réalisé par EL HASSAK IMAD</pre></div>
+    <div class="pane" id="pane-vars"><div class="emp">Aucune exécution.</div></div>
+    <div class="pane" id="pane-viz">
+      <div class="ctl">
+        <button id="b0" title="Début">⏮</button><button id="b1" title="Précédent">◀</button><button id="bp" class="p" title="Lecture / pause">▶</button><button id="b2" title="Suivant">▶|</button><button id="b3" title="Fin">⏭</button>
+        <input type="range" id="slider" min="0" max="0" value="0" aria-label="Étape">
+        <select id="speed"><option value="900">Lent</option><option value="450" selected>Normal</option><option value="120">Rapide</option></select>
+        <span id="stepinfo"></span>
+      </div>
+      <div class="vz" id="vz"><div class="emp">Clique sur « Visualiser » pour exécuter et suivre l'algorithme pas à pas.</div></div>
+    </div>
+  </div>
+</main>
+<div id="tip"></div>
+<div id="ac" role="listbox"></div>
+<dialog id="dlg"><div class="dh"><h2>Documentation d'AlgoLab <small style="font-weight:400;color:var(--mute)">· par EL HASSAK IMAD</small></h2><button id="dclose">Fermer</button></div><div class="db" id="dbody"></div></dialog>
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const strip=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const DEF={entier:'0',reel:'0',chaine:'""',caractere:'""',booleen:'false'};
+const ALIAS={boolean:'booleen',bool:'booleen',string:'chaine',char:'caractere',real:'reel',integer:'entier',int:'entier',float:'reel'};
+
+/* ---------- Fonctions intégrées ---------- */
+const lib={longueur:s=>String(s).length,abs:Math.abs,racine:Math.sqrt,arrondi:Math.round,tronque:Math.trunc,
+ aleatoire:n=>Math.floor(Math.random()*n),majuscule:s=>String(s).toUpperCase(),minuscule:s=>String(s).toLowerCase(),
+ sous_chaine:(s,d,l)=>String(s).substr(d-1,l),pos:(a,s)=>String(s).indexOf(a)+1,ord:c=>String(c).charCodeAt(0),chr:n=>String.fromCharCode(n)};
+
+/* ---------- Coloration ---------- */
+const KW={struct:'algorithme variable variables constante constantes debut fin',ctrl:'si alors sinon finsi tantque faire fintantque pour finpour repeter jusqua',
+ type:'entier reel chaine caractere booleen table tableau',io:'ecrire ecrireln afficher lire',fn:Object.keys(lib).join(' '),op:'et ou non div mod',bool:'vrai faux'};
+const CLS={};for(const c in KW)KW[c].split(' ').forEach(w=>CLS[w]=c);
+function tok(line){
+  const t=[],re=/(\/\/.*)|("[^"]*"|'[^']*')|(\d+(?:\.\d+)?)|([A-Za-zÀ-ÿ_][A-Za-zÀ-ÿ_0-9]*)|(<-|:=|←|<>|<=|>=|[+\-*\/^=<>])|([\s\S])/g;
+  const ctx=/^\s*pour\s/i.test(line)||/\b(table|tableau)\b/i.test(strip(line));let m;
+  while(m=re.exec(line)){
+    let c=null;
+    if(m[1])c='com';else if(m[2])c='str';else if(m[3])c='num';
+    else if(m[4]){const w=strip(m[4]).toLowerCase();c=CLS[w]||(ctx&&/^(de|a|pas)$/.test(w)?'ctrl':null)}
+    else if(m[5])c='op';
+    t.push({s:m.index,e:m.index+m[0].length,c,x:m[0]});
+  }
+  return t;
+}
+const hl=code=>code.split('\n').map(l=>tok(l).map(k=>k.c?`<span class="t-${k.c}">${esc(k.x)}</span>`:esc(k.x)).join('')).join('\n');
+
+/* ---------- Documentation (données) ---------- */
+const D=[
+['algorithme','struct','Algorithme','Première ligne obligatoire : donne un nom au programme.','Algorithme Bonjour'],
+['variable variables','struct','Variable','Section où l\'on déclare les variables avec leur type.','Variable\n  age : entier\n  nom : chaine'],
+['constante constantes','struct','Constante','Valeurs fixes, non modifiables : NOM = valeur.','Constante\n  PI = 3.14159'],
+['debut','struct','Debut','Marque le début des instructions.','Debut\n  ecrireln("Salut")'],
+['fin','struct','Fin','Termine l\'algorithme. Rien ne doit suivre.','Fin'],
+['si alors sinon finsi','ctrl','si … alors … sinon … finsi','Exécute un bloc seulement si la condition est vraie. « sinon si » enchaîne plusieurs conditions.','si note >= 10 alors\n  ecrireln("Admis")\nsinon\n  ecrireln("Refusé")\nfinsi'],
+['tantque fintantque faire','ctrl','tantque … faire','Répète tant que la condition est vraie (peut ne jamais s\'exécuter).','tantque n > 0 faire\n  n <- n - 1\nfintantque'],
+['pour finpour de a pas','ctrl','pour … de … a … faire','Boucle avec compteur. « pas » fixe l\'incrément (négatif pour descendre).','pour i de 1 a 10 pas 2 faire\n  ecrire(i, " ")\nfinpour'],
+['repeter jusqua','ctrl','repeter … jusqua','Répète au moins une fois, jusqu\'à ce que la condition devienne vraie.','repeter\n  lire(x)\njusqua x > 0'],
+['entier','type','entier','Nombre entier.','n : entier'],
+['reel','type','reel','Nombre décimal (« réel » accepté).','prix : reel'],
+['chaine','type','chaine','Texte entre guillemets.','nom : chaine'],
+['caractere','type','caractere','Un seul caractère.','c : caractere'],
+['booleen','type','booleen','Valeur vrai ou faux.','ok : booleen'],
+['table tableau','type','table','Tableau indexé : table[min..max] de type. Plusieurs dimensions possibles.','t : table[1..10] de entier\nm : table[1..3][1..3] de reel'],
+['ecrire','io','ecrire(…)','Affiche des valeurs séparées par des virgules, sans retour à la ligne.','ecrire("x = ", x)'],
+['ecrireln afficher','io','ecrireln(…)','Affiche puis passe à la ligne.','ecrireln("Bonjour")'],
+['lire','io','lire(variable)','Demande une saisie, convertie selon le type de la variable.','lire(age)'],
+['et ou non','op','et · ou · non','Opérateurs logiques.','si (a > 0) et non (b = 0) alors'],
+['div mod','op','div · mod','div : quotient entier. mod : reste de la division.','q <- 17 div 5   // 3\nr <- 17 mod 5   // 2'],
+['<- := ←','op','<-  (affectation)','Range la valeur de droite dans la variable de gauche.','x <- x + 1'],
+['vrai faux','bool','vrai · faux','Valeurs booléennes.','ok <- vrai']];
+[['longueur(s)','Nombre de caractères d\'une chaîne.','longueur("abc")  // 3'],['abs(x)','Valeur absolue.','abs(-4)  // 4'],['racine(x)','Racine carrée.','racine(16)  // 4'],
+['arrondi(x)','Entier le plus proche.','arrondi(2.6)  // 3'],['tronque(x)','Partie entière, sans arrondi.','tronque(2.9)  // 2'],['aleatoire(n)','Entier au hasard de 0 à n-1.','de <- aleatoire(6) + 1'],
+['majuscule(s)','Texte en majuscules.','majuscule("ab")  // "AB"'],['minuscule(s)','Texte en minuscules.','minuscule("AB")  // "ab"'],
+['sous_chaine(s,d,l)','l caractères de s à partir de la position d (1 = premier).','sous_chaine("bonjour",1,3)  // "bon"'],['pos(a,s)','Position de a dans s (0 si absent).','pos("j","bonjour")  // 4'],
+['ord(c)','Code d\'un caractère.','ord("A")  // 65'],['chr(n)','Caractère du code n.','chr(66)  // "B"']].forEach(f=>D.push([f[0].split('(')[0],'fn',f[0],f[1],f[2]]));
+const MAP={};D.forEach(e=>e[0].split(' ').forEach(k=>MAP[k]=MAP[k]||e));
+const CATN={struct:'Structure',ctrl:'Contrôle',type:'Types',io:'Entrées / sorties',fn:'Fonctions intégrées',op:'Opérateurs',bool:'Booléens'};
+
+const PROGS={
+'Tri à bulles':`Algorithme TriTableau
+Constante
+  N = 5
+Variable
+  t : table[1..5] de entier
+  i, j, tmp : entier
+Debut
+  pour i de 1 a N faire
+    ecrire("t[", i, "] = ")
+    lire(t[i])
+  finpour
+  // tri à bulles
+  pour i de 1 a N - 1 faire
+    pour j de 1 a N - i faire
+      si t[j] > t[j+1] alors
+        tmp <- t[j]
+        t[j] <- t[j+1]
+        t[j+1] <- tmp
+      finsi
+    finpour
+  finpour
+  ecrireln("Tableau trié :")
+  pour i de 1 a N faire
+    ecrire(t[i], " ")
+  finpour
+  ecrireln("")
+Fin
+`,
+'Palindrome':`Algorithme Palindrome
+Variable
+  mot, inverse : chaine
+  i : entier
+Debut
+  ecrire("Saisir un mot : ")
+  lire(mot)
+  inverse <- ""
+  pour i de longueur(mot) a 1 pas -1 faire
+    inverse <- inverse + mot[i]
+  finpour
+  ecrireln("Inverse : ", inverse)
+  si mot = inverse alors
+    ecrireln("Palindrome")
+  sinon
+    ecrireln("Non palindrome")
+  finsi
+Fin
+`,
+'Factorielle':`Algorithme Factorielle
+Variable
+  n, i, f : entier
+Debut
+  ecrire("n = ")
+  lire(n)
+  f <- 1
+  pour i de 2 a n faire
+    f <- f * i
+  finpour
+  ecrireln(n, "! = ", f)
+Fin
+`,
+'Somme (répéter)':`Algorithme Somme
+Variable
+  x, somme, compteur : entier
+Debut
+  somme <- 0
+  compteur <- 0
+  repeter
+    ecrire("Nombre (0 pour finir) : ")
+    lire(x)
+    somme <- somme + x
+    compteur <- compteur + 1
+  jusqua x = 0
+  ecrireln("Somme = ", somme)
+Fin
+`};
+
+/* ---------- Transpilation ---------- */
+function cx(e){
+  return e.split(/("[^"]*"|'[^']*')/).map((p,i)=>{
+    if(i%2) return p;
+    p=strip(p).replace(/<>/g,'!==').replace(/(?<![<>!=])=(?!=)/g,'===').replace(/\bet\b/gi,'&&').replace(/\bou\b/gi,'||').replace(/\bnon\b/gi,'!')
+      .replace(/\bvrai\b/gi,'true').replace(/\bfaux\b/gi,'false').replace(/\bmod\b/gi,'%').replace(/\^/g,'**');
+    return idx(p.replace(/([\w.\[\]]+|\([^()]*\))\s+div\s+([\w.\[\]]+|\([^()]*\))/gi,'Math.trunc($1/$2)'));
+  }).join('');
+}
+/* chaîne[i] : indices à partir de 1 */
+let STR=new Set();
+function idx(p){
+  for(const n of STR){
+    const re=new RegExp('\\b'+n+'\\[','g');let m;
+    while((m=re.exec(p))){
+      let d=1,j=m.index+m[0].length;
+      while(j<p.length&&d){if(p[j]==='[')d++;else if(p[j]===']')d--;j++}
+      p=p.slice(0,m.index)+`__ch(${n},${p.slice(m.index+m[0].length,j-1)})`+p.slice(j);
+      re.lastIndex=m.index+1;
+    }
+  }
+  return p;
+}
+function transpile(src){
+  const L=src.split('\n'),out=[],names=new Set(),types={},stack=[];
+  let sec=null,ended=false,name='';STR=new Set();
+  const err=(i,m)=>{throw {line:i+1,msg:m}};
+  for(let i=0;i<L.length;i++){
+    const o=L[i].replace(/\/\/.*$/,'').trim(); if(!o) continue;
+    const k=strip(o).toLowerCase(),ln=i+1,S=`__s(${ln},__snap);`;
+    const mt=re=>{const r=re.exec(k);return r&&{g:j=>o.slice(...r.indices[j]),r}};
+    let m;
+    if(ended) err(i,"Instruction après « Fin »");
+    if(sec===null){ if(m=mt(/^algorithme\s+(\w+)\s*$/d)){name=m.g(1);sec='h';continue} err(i,"Le programme doit commencer par « Algorithme nom »") }
+    if(sec!=='body'&&/^variables?\s*:?$/.test(k)){sec='var';continue}
+    if(sec!=='body'&&/^constantes?\s*:?$/.test(k)){sec='const';continue}
+    if(k==='debut'&&sec!=='body'){sec='body';continue}
+    if(sec==='h') err(i,"« Variable », « Constante » ou « Debut » attendu");
+    if(sec==='var'){
+      m=mt(/^(.+?)\s*:\s*(.+)$/d); if(!m) err(i,"Déclaration attendue, ex. : a, b : entier");
+      const ids=m.g(1).split(',').map(s=>s.trim());
+      ids.forEach(s=>{if(!/^[A-Za-z_]\w*$/.test(s))err(i,`Nom de variable invalide : « ${s} »`);if(names.has(s))err(i,`Variable « ${s} » déjà déclarée`)});
+      const ty=m.g(2).trim(),tl=strip(ty).toLowerCase(),t=tl.match(/^(?:table|tableau)\s*((?:\[[^\]]+\]\s*)+)\s*de\s+(\w+)$/);
+      if(t){
+        const base=ALIAS[t[2]]||t[2]; if(!(base in DEF)) err(i,`Type inconnu : « ${t[2]} »`);
+        const dims=[...ty.matchAll(/\[\s*([^\].]+?)\s*\.\.\s*([^\]]+?)\s*\]/g)];
+        if(!dims.length) err(i,"Bornes attendues, ex. : table[1..10] de entier");
+        const d=dims.map(x=>`[${cx(x[1])},${cx(x[2])}]`).join(',');
+        ids.forEach(s=>{names.add(s);types[s]='table de '+base;out.push(`let ${s} = __tab([${d}], ${DEF[base]});`)});
+      }else{
+        const base=ALIAS[tl]||tl; if(!(base in DEF)) err(i,`Type inconnu : « ${ty} »`);
+        ids.forEach(s=>{names.add(s);types[s]=base;if(base==='chaine'||base==='caractere')STR.add(s);out.push(`let ${s} = ${DEF[base]};`)});
+      }
+      continue;
+    }
+    if(sec==='const'){
+      m=mt(/^(\w+)\s*(?:<-|←|:=|=)\s*(.+)$/d); if(!m) err(i,"Constante attendue, ex. : PI = 3.14");
+      names.add(m.g(1));types[m.g(1)]='constante';out.push(`const ${m.g(1)} = ${cx(m.g(2))};`);continue;
+    }
+    const top=()=>stack[stack.length-1];
+    const close=(kind,js)=>{if(top()!==kind)err(i,top()?`« fin${top()} » attendu avant ceci`:`Aucun bloc « ${kind} » ouvert`);stack.pop();out.push(js)};
+    if(k==='fin'){ if(stack.length)err(i,`Bloc « ${top()} » non fermé`); out.push(S); ended=true; continue }
+    if(m=mt(/^si\s+(.+)\s+alors$/d)){stack.push('si');out.push(S,`if (${cx(m.g(1))}) {`);continue}
+    if(m=mt(/^sinon\s+si\s+(.+)\s+alors$/d)){if(top()!=='si')err(i,"« sinon si » en dehors d'un « si »");out.push(`} else if (${cx(m.g(1))}) {`);continue}
+    if(k==='sinon'){if(top()!=='si')err(i,"« sinon » en dehors d'un « si »");out.push('} else {');continue}
+    if(k==='finsi'){close('si','}');continue}
+    if(m=mt(/^tantque\s+(.+)\s+faire$/d)){stack.push('tantque');out.push(`while (${cx(m.g(1))}) { __g(); ${S}`);continue}
+    if(k==='fintantque'){close('tantque','}');continue}
+    if(m=mt(/^pour\s+(\w+)\s+(?:de|<-|←)\s+(.+?)\s+a\s+(.+?)(?:\s+pas\s+(.+?))?\s+faire$/d)){
+      const v=m.g(1); if(!names.has(v))err(i,`Variable « ${v} » non déclarée`);
+      stack.push('pour');
+      out.push(`{ const __e=(${cx(m.g(3))}), __p=(${m.r[4]?cx(m.g(4)):1}); for (${v}=(${cx(m.g(2))}); __p>0 ? ${v}<=__e : ${v}>=__e; ${v}+=__p) { __g(); ${S}`);continue}
+    if(k==='finpour'){close('pour','}}');continue}
+    if(k==='repeter'){stack.push('repeter');out.push(`do { __g(); ${S}`);continue}
+    if(m=mt(/^jusqua\s+(.+)$/d)){close('repeter',`} while (!(${cx(m.g(1))}));`);continue}
+    if(m=mt(/^(ecrireln|ecrire|afficher)\s*\((.*)\)$/d)){const a=m.g(2).trim();out.push(S,`__w(${m.r[1]==='ecrire'?0:1}${a?','+cx(a):''});`);continue}
+    if(m=mt(/^lire\s*\((.+)\)$/d)){
+      const T=m.g(1).trim(),b=(T.match(/^[A-Za-z_]\w*/)||[''])[0];
+      if(!names.has(b))err(i,`Variable « ${b||T} » non déclarée`);
+      out.push(S,`${cx(T)} = __r("${(types[b]||'chaine').replace('table de ','')}");`);continue}
+    if(m=mt(/^(.+?)\s*(?:<-|←|:=)\s*(.+)$/d)){
+      const l=m.g(1),b=(l.match(/^[A-Za-z_]\w*/)||[''])[0];
+      if(!names.has(b))err(i,`Variable « ${b||l} » non déclarée`);
+      if(STR.has(b)&&/\[/.test(l))err(i,"Impossible de modifier un caractère d'une chaîne : reconstruis la chaîne avec +");
+      out.push(S,`${cx(l)} = ${cx(m.g(2))};`);continue}
+    err(i,`Instruction non reconnue : « ${o} »`);
+  }
+  if(sec===null) err(0,"Programme vide");
+  if(!ended) err(L.length-1,"« Fin » manquant");
+  const isDecl=l=>/^(let|const) /.test(l);
+  return {name,types,js:`with(__lib){\n${out.filter(isDecl).join('\n')}\nconst __snap=()=>{try{return {${[...names].join(',')}}}catch(e){return {}}};\ntry{\n${out.filter(l=>!isDecl(l)).join('\n')}\n}catch(e){e.snap=__snap();throw e}\nreturn __snap();}`};
+}
+
+/* ---------- Exécution + trace ---------- */
+let TRACE=[],step=0,timer=null,TYPES={},LASTBUF='',TRUNC=false;
+const fv=v=>typeof v==='string'?JSON.stringify(v):String(v);
+function fmt(v){return v&&typeof v==='object'?'{ '+Object.entries(v).map(([k,x])=>k+': '+fmt(x)).join(', ')+' }':fv(v)}
+function showVars(snap){
+  const r=Object.entries(snap||{}).map(([k,v])=>`<tr><td>${k}</td><td>${esc(TYPES[k]||'')}</td><td>${esc(fmt(v))}</td></tr>`).join('');
+  $('pane-vars').innerHTML=r?`<table><tr><th>Nom</th><th>Type</th><th>Valeur finale</th></tr>${r}</table>`:'<div class="emp">Aucune variable.</div>';
+}
+function run(){
+  stopPlay();setBar(0);
+  const out=$('out');let buf='',steps=0,curLine=0;TRACE=[];TRUNC=false;
+  let tr;
+  try{tr=transpile($('src').value)}
+  catch(e){out.innerHTML=`<span class="e">Erreur ligne ${e.line} : ${esc(e.msg)}</span>`;setBar(e.line,'err');$('status').textContent='Erreur de syntaxe';showTab('console');renderViz();return false}
+  TYPES=tr.types;
+  const env={
+    __w:(nl,...a)=>{buf+=a.join('')+(nl?'\n':'')},
+    __g:()=>{if(++steps>3e6)throw new Error("Boucle infinie suspectée : exécution arrêtée")},
+    __s:(l,sn)=>{curLine=l;if(TRACE.length<4000)TRACE.push({line:l,vars:structuredClone(sn()),out:buf.length});else TRUNC=true},
+    __ch:(s,i)=>{if(!Number.isInteger(i)||i<1||i>String(s).length)throw new Error(`Indice ${i} hors de la chaîne (1 à ${String(s).length})`);return String(s)[i-1]},
+    __tab:(d,def,k=0)=>{const o={};for(let i=d[k][0];i<=d[k][1];i++)o[i]=k===d.length-1?def:env.__tab(d,def,k+1);return o},
+    __r:ty=>{
+      const q=buf.slice(buf.lastIndexOf('\n')+1),v=prompt(q||'Saisie :'); if(v===null)throw new Error("Saisie annulée");
+      buf+=v+'\n';
+      if(ty==='entier'||ty==='reel'){const x=ty==='entier'?parseInt(v,10):parseFloat(v.replace(',','.'));if(isNaN(x))throw new Error(`« ${v} » n'est pas un ${ty}`);return x}
+      if(ty==='booleen')return /^(vrai|true|1)$/i.test(v.trim());
+      return ty==='caractere'?v.charAt(0):v;
+    }};
+  const t0=performance.now();let ok=true;
+  try{
+    const snap=new Function('__w','__g','__tab','__r','__s','__ch','__lib',tr.js)(env.__w,env.__g,env.__tab,env.__r,env.__s,env.__ch,lib);
+    out.textContent=buf;showVars(snap);
+    $('status').textContent=`« ${tr.name} » terminé en ${(performance.now()-t0).toFixed(1)} ms · ${TRACE.length} étapes`;
+  }catch(e){
+    ok=false;let msg=e.message||String(e);
+    const nd=msg.match(/^(\w+) is not defined/); if(nd)msg=`Variable « ${nd[1]} » non déclarée`;
+    if(/Assignment to constant/.test(msg))msg="Une constante ne peut pas être modifiée";
+    out.textContent=buf;out.insertAdjacentHTML('beforeend',`\n<span class="e">Erreur d'exécution (ligne ${curLine}) : ${esc(msg)}</span>`);
+    if(e.snap)TRACE.push({line:curLine,vars:structuredClone(e.snap),out:buf.length,err:msg});
+    showVars(e.snap);setBar(curLine,'err');$('status').textContent='Erreur d\'exécution';
+  }
+  LASTBUF=buf;step=0;renderViz();return ok;
+}
+
+/* ---------- Visualisation ---------- */
+function cells(o,po,max){
+  return Object.entries(o).map(([i,v])=>{
+    const c=po&&po[i]!==v,h=typeof v==='number'&&max?Math.max(3,Math.abs(v)/max*56):0;
+    return `<div class="cell${c?' ch':''}"><div class="bar" style="height:${h}px"></div><b>${esc(v)}</b><small>${esc(i)}</small></div>`}).join('');
+}
+function tableHTML(k,v,pv){
+  const flat=JSON.stringify(v).match(/-?\d+\.?\d*/g)||[],max=Math.max(0,...flat.map(Math.abs));
+  const first=Object.values(v)[0];
+  const body=first&&typeof first==='object'?Object.entries(v).map(([r,row])=>`<div class="trow"><small>${esc(k)}[${esc(r)}]</small>${cells(row,pv&&pv[r],max)}</div>`).join(''):`<div class="trow">${cells(v,pv,max)}</div>`;
+  return `<h4>${esc(k)} · ${esc(TYPES[k]||'table')}</h4>${body}`;
+}
+function renderViz(){
+  const vz=$('vz');
+  if(!TRACE.length){vz.innerHTML='<div class="emp">Aucune trace. Clique sur « Visualiser » après avoir écrit un algorithme valide.</div>';$('stepinfo').textContent='';return}
+  step=Math.max(0,Math.min(step,TRACE.length-1));
+  const s=TRACE[step],p=TRACE[step-1],sl=$('slider');
+  sl.max=TRACE.length-1;sl.value=step;$('stepinfo').textContent=`${step+1} / ${TRACE.length}${TRUNC?'+':''}`;
+  let cards='',tabs='';
+  for(const [k,v] of Object.entries(s.vars)){
+    if(v&&typeof v==='object')tabs+=tableHTML(k,v,p&&p.vars[k]);
+    else cards+=`<div class="card${p&&p.vars[k]!==v?' ch':''}"><span>${k}</span><b>${esc(fv(v))}</b><small>${esc(TYPES[k]||'')}</small></div>`;
+  }
+  const line=$('src').value.split('\n')[s.line-1]||'';
+  vz.innerHTML=`<div id="vline">Ligne ${s.line} : ${hl(line.trim())}</div>${s.err?`<div class="e">${esc(s.err)}</div>`:''}<h4>Variables</h4><div class="cards">${cards||'<span class="emp">—</span>'}</div>${tabs}<h4>Sortie</h4><pre id="vout">${esc(LASTBUF.slice(0,s.out))}</pre>${TRUNC&&step===TRACE.length-1?'<div class="emp">Trace limitée aux 4000 premières étapes.</div>':''}`;
+  setBar(s.line,s.err?'err':'');
+}
+function stopPlay(){clearInterval(timer);timer=null;$('bp').textContent='▶'}
+function play(){
+  if(timer){stopPlay();return}
+  if(step>=TRACE.length-1)step=0;
+  $('bp').textContent='⏸';
+  timer=setInterval(()=>{if(step>=TRACE.length-1){stopPlay();return}step++;renderViz()},+$('speed').value);
+}
+const go=n=>{stopPlay();step=n==='end'?TRACE.length-1:n==='start'?0:step+n;renderViz()};
+$('b0').onclick=()=>go('start');$('b1').onclick=()=>go(-1);$('b2').onclick=()=>go(1);$('b3').onclick=()=>go('end');$('bp').onclick=play;
+$('slider').oninput=e=>{stopPlay();step=+e.target.value;renderViz()};
+$('speed').onchange=()=>{if(timer){stopPlay();play()}};
+
+/* ---------- Éditeur ---------- */
+const src=$('src'),LH=21,PAD=12;
+let CW=8.4;
+function measure(){const s=document.createElement('span');s.style.cssText='position:absolute;visibility:hidden;white-space:pre;font:'+getComputedStyle(src).font;s.textContent='M'.repeat(50);document.body.appendChild(s);CW=s.getBoundingClientRect().width/50;s.remove()}
+function setBar(line,cls){const b=$('bar');if(!line){b.style.display='none';return}b.style.display='block';b.className=cls||'';b.style.top=(PAD+(line-1)*LH)+'px'}
+function sync(){$('hl').style.transform=`translate(${-src.scrollLeft}px,${-src.scrollTop}px)`;$('gn').style.transform=`translateY(${-src.scrollTop}px)`}
+function paint(){
+  const v=src.value,n=v.split('\n').length;
+  const bar=$('bar');$('hl').innerHTML=hl(v)+'\n';$('hl').appendChild(bar);
+  $('gn').textContent=Array.from({length:n},(_,i)=>i+1).join('\n');
+  sync();pos();
+}
+function pos(){const b=src.value.slice(0,src.selectionStart).split('\n');$('pos').textContent=`Ln ${b.length}, Col ${b[b.length-1].length+1} · ${src.value.split('\n').length} lignes`}
+src.addEventListener('input',e=>{paint();hideTip();setBar(0);try{localStorage.setItem('algolab',src.value)}catch(x){}if(e.isTrusted)acUpdate();else acHide()});
+src.addEventListener('scroll',()=>{sync();hideTip()});
+['keyup','click'].forEach(ev=>src.addEventListener(ev,pos));
+/* ---------- Autocomplétion & fermeture automatique ---------- */
+const TPL={algorithme:'Algorithme ¦',variable:'Variable\n  ¦',constante:'Constante\n  ¦',debut:'Debut',fin:'Fin',
+  si:'si ¦ alors\n  \nfinsi',tantque:'tantque ¦ faire\n  \nfintantque',pour:'pour i de 1 a ¦ faire\n  \nfinpour',repeter:'repeter\n  ¦\njusqua ',
+  ecrire:'ecrire("¦")',ecrireln:'ecrireln("¦")',afficher:'afficher("¦")',lire:'lire(¦)',table:'table[1..¦] de '};
+const ITEMS=[],AC={open:false,items:[],i:0,prefix:'',skip:false},PAIR={'(':')','[':']','"':'"',"'":"'"};
+for(const c in KW)KW[c].split(' ').forEach(w=>{
+  if(/^(variables|constantes|tableau)$/.test(w))return;
+  const n=c==='struct'?w[0].toUpperCase()+w.slice(1):w;
+  ITEMS.push({n,k:c,key:w,t:TPL[w]||(c==='fn'?w+'(¦)':n)});
+});
+function declared(){
+  const s=new Set();
+  for(const l of src.value.split('\n')){
+    if(/^\s*debut\b/i.test(strip(l)))break;
+    let m=l.match(/^\s*([A-Za-z_]\w*(?:\s*,\s*[A-Za-z_]\w*)*)\s*:(?!=)\s*\S/);
+    if(m)m[1].split(',').forEach(x=>s.add(x.trim()));
+    else if(m=l.match(/^\s*([A-Za-z_]\w*)\s*(?:=|<-|:=)/))s.add(m[1]);
+  }
+  return s;
+}
+function ins(t,back=0){
+  src.focus();
+  if(!document.execCommand('insertText',false,t)){src.setRangeText(t,src.selectionStart,src.selectionEnd,'end');src.dispatchEvent(new Event('input'))}
+  if(back){const p=src.selectionStart-back;src.setSelectionRange(p,p)}
+  pos();
+}
+function acHide(){AC.open=false;$('ac').style.display='none'}
+function acDraw(){$('ac').innerHTML=AC.items.map((it,j)=>`<div class="it${j===AC.i?' on':''}" data-j="${j}"><span class="t-${it.k}">${esc(it.n)}</span><small>${it.k==='var'?'variable':CATN[it.k]}</small></div>`).join('')}
+function acUpdate(){
+  if(AC.skip)return;
+  const v=src.value,s=src.selectionStart;if(s!==src.selectionEnd)return acHide();
+  const lb=v.slice(v.lastIndexOf('\n',s-1)+1,s),m=lb.match(/[A-Za-zÀ-ÿ_][A-Za-zÀ-ÿ_0-9]*$/);
+  if(!m||/\/\//.test(lb)||(lb.match(/"/g)||[]).length%2||(lb.match(/'/g)||[]).length%2)return acHide();
+  const p=strip(m[0]).toLowerCase();
+  let items=[...declared()].filter(n=>strip(n).toLowerCase().startsWith(p)).map(n=>({n,k:'var',t:n})).concat(ITEMS.filter(i=>i.key.startsWith(p)));
+  items.sort((a,b)=>(strip(b.n).toLowerCase()===p)-(strip(a.n).toLowerCase()===p));
+  items=items.slice(0,8);
+  if(!items.length||(items.length===1&&items[0].t===m[0]))return acHide();
+  Object.assign(AC,{items,i:0,prefix:m[0],open:true});acDraw();
+  const r=src.getBoundingClientRect(),ln=v.slice(0,s).split('\n').length-1,box=$('ac');
+  box.style.display='block';
+  let top=r.top+PAD+(ln+1)*LH-src.scrollTop+2;const h=box.offsetHeight;if(top+h>innerHeight)top-=h+LH+4;
+  box.style.left=Math.max(4,Math.min(r.left+PAD+(lb.length-m[0].length)*CW-src.scrollLeft,innerWidth-box.offsetWidth-8))+'px';box.style.top=top+'px';
+}
+function acAccept(force){
+  const it=AC.items[AC.i];if(!it)return false;
+  if(!force&&!it.t.includes('¦')&&it.t.toLowerCase()===AC.prefix.toLowerCase()){acHide();return false}
+  const s=src.selectionStart,ind=(src.value.slice(0,s).match(/([ \t]*)[^\n]*$/)||['',''])[1];
+  const raw=it.t.replace(/\n/g,'\n'+ind),i=raw.indexOf('¦'),txt=raw.replace('¦','');
+  AC.skip=true;src.setSelectionRange(s-AC.prefix.length,s);ins(txt,i<0?0:txt.length-i);AC.skip=false;acHide();return true;
+}
+function autoPair(e){
+  if(e.ctrlKey||e.metaKey||e.altKey||e.key.length!==1)return;
+  const v=src.value,s=src.selectionStart,en=src.selectionEnd,ch=e.key,nx=v[en]||'',lb=v.slice(v.lastIndexOf('\n',s-1)+1,s);
+  if((ch===')'||ch===']')&&s===en&&nx===ch){e.preventDefault();src.setSelectionRange(s+1,s+1);return}
+  if(!(ch in PAIR))return;
+  if(s!==en){e.preventDefault();ins(ch+v.slice(s,en)+PAIR[ch],1);return}
+  if(/\/\//.test(lb))return;
+  const nd=(lb.match(/"/g)||[]).length%2,ns=(lb.match(/'/g)||[]).length%2;
+  if(ch==='"'||ch==="'"){
+    if(nx===ch){e.preventDefault();src.setSelectionRange(s+1,s+1);return}
+    if(nd||ns||/\w$/.test(lb)||/\w/.test(nx))return;
+    e.preventDefault();ins(ch+ch,1);return;
+  }
+  if(nd||ns||/\w/.test(nx))return;
+  e.preventDefault();
+  if(ch==='('&&/\b(ecrireln|ecrire|afficher)$/i.test(strip(lb)))ins('("")',2);else ins(ch+PAIR[ch],1);
+}
+$('ac').addEventListener('mousedown',e=>{e.preventDefault();const d=e.target.closest('.it');if(d){AC.i=+d.dataset.j;acAccept(true)}});
+src.addEventListener('blur',acHide);src.addEventListener('click',acHide);
+src.addEventListener('keydown',e=>{
+  if(AC.open){
+    if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();AC.i=(AC.i+(e.key==='ArrowDown'?1:-1)+AC.items.length)%AC.items.length;acDraw();return}
+    if(e.key==='Escape'){e.preventDefault();acHide();return}
+    if((e.key==='Tab'||e.key==='Enter')&&!e.ctrlKey&&!e.metaKey&&acAccept(e.key==='Tab')){e.preventDefault();return}
+    if(/^(Arrow|Home|End|Page)/.test(e.key))acHide();
+  }
+  if(e.key===' '&&e.ctrlKey){e.preventDefault();acUpdate();return}
+  if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)){e.preventDefault();$('run').click();return}
+  if(e.key==='Backspace'&&src.selectionStart===src.selectionEnd){
+    const s=src.selectionStart,v=src.value;
+    if(s>0&&PAIR[v[s-1]]&&PAIR[v[s-1]]===v[s]){e.preventDefault();src.setSelectionRange(s-1,s+1);if(!document.execCommand('delete')){src.setRangeText('');src.dispatchEvent(new Event('input'))}return}
+  }
+  if(e.key==='Tab'){e.preventDefault();ins('  ');return}
+  autoPair(e);
+});
+function setCode(t){src.value=t;src.dispatchEvent(new Event('input'));src.scrollTop=0}
+
+/* ---------- Infobulles ---------- */
+const tip=$('tip');
+function entryHTML(e){return `<b>${esc(e[2])}</b> <small>${CATN[e[1]]}</small><p>${esc(e[3])}</p><pre>${hl(e[4])}</pre>`}
+function hideTip(){tip.style.display='none'}
+src.addEventListener('mousemove',e=>{
+  const r=src.getBoundingClientRect(),ln=Math.floor((e.clientY-r.top-PAD+src.scrollTop)/LH),col=Math.floor((e.clientX-r.left-PAD+src.scrollLeft)/CW);
+  const line=src.value.split('\n')[ln];if(line===undefined||col<0){hideTip();return}
+  const t=tok(line).find(k=>col>=k.s&&col<k.e&&k.c&&k.c!=='com'&&k.c!=='str'&&k.c!=='num');
+  const d=t&&MAP[t.c==='op'&&!/^\w/.test(t.x)?t.x:strip(t.x).toLowerCase()];
+  if(!d){hideTip();return}
+  tip.innerHTML=entryHTML(d);tip.style.display='block';
+  const w=tip.offsetWidth,h=tip.offsetHeight;
+  tip.style.left=Math.min(e.clientX+14,innerWidth-w-8)+'px';tip.style.top=(e.clientY+h+24>innerHeight?e.clientY-h-12:e.clientY+18)+'px';
+});
+src.addEventListener('mouseleave',hideTip);
+
+/* ---------- Onglets, thèmes, documentation ---------- */
+function showTab(t){document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('on',p.id==='pane-'+t))}
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>showTab(b.dataset.t));
+$('theme').onchange=e=>{document.documentElement.dataset.theme=e.target.value;try{localStorage.setItem('algotheme',e.target.value)}catch(x){}};
+try{const t=localStorage.getItem('algotheme');if(t){document.documentElement.dataset.theme=t;$('theme').value=t}}catch(e){}
+$('run').onclick=()=>{run();showTab('console')};
+$('viz').onclick=()=>{if(run()||TRACE.length){showTab('viz');if(TRACE.length>1)play()}};
+$('ex').onclick=()=>setCode(PROGS['Tri à bulles']);
+$('exp').onclick=()=>{const nm=(src.value.match(/algorithme\s+(\w+)/i)||[0,'algorithme'])[1],a=document.createElement('a');a.href=URL.createObjectURL(new Blob([src.value],{type:'text/plain'}));a.download=nm+'.alg';a.click();URL.revokeObjectURL(a.href)};
+$('imp').onchange=e=>{const f=e.target.files[0];if(f)f.text().then(t=>{setCode(t);e.target.value=''})};
+
+function docHTML(){
+  const leg=[['struct','Structure'],['ctrl','Contrôle'],['type','Types'],['io','Entrées/sorties'],['fn','Fonctions'],['op','Opérateurs'],['bool','Vrai/Faux'],['num','Nombres'],['str','"Textes"'],['com','// Commentaires']];
+  let h=`<h3>Prise en main</h3><ul><li>Écris ton algorithme dans l'éditeur. Il suit la forme <b>Algorithme → Constante → Variable → Debut → Fin</b>.</li>
+  <li><b>▶ Exécuter</b> (Ctrl+Entrée) lance le programme ; la console affiche la sortie et l'onglet Variables l'état final.</li>
+  <li><b>Visualiser</b> rejoue l'exécution pas à pas : ligne en cours surlignée, variables en cartes, tables en cellules avec barres. Les valeurs modifiées à chaque étape sont encadrées. Contrôles : lecture/pause, précédent/suivant, curseur, vitesse.</li>
+  <li><b>Survol</b> : passe la souris sur un mot-clé, un type, une fonction ou un opérateur pour voir sa description et un exemple.</li>
+  <li><b>Autocomplétion</b> : dès les premières lettres, une liste propose mots-clés, types, fonctions et <b>variables déclarées</b> (↑ ↓ pour choisir, Tab ou Entrée pour valider, Échap pour fermer, Ctrl+Espace pour la rouvrir). Les structures se complètent entièrement : <code>si</code> → <code>si … alors … finsi</code>, <code>pour</code>, <code>tantque</code>, <code>repeter</code>, <code>ecrire("")</code>…</li>
+  <li><b>Fermeture automatique</b> : <code>(</code> <code>[</code> <code>"</code> <code>'</code> ajoutent leur symbole fermant ; taper le symbole fermant le saute ; Retour arrière efface la paire vide. Après <code>ecrire</code>, <code>ecrireln</code> ou <code>afficher</code>, taper <code>(</code> donne <code>("")</code> avec le curseur entre les guillemets.</li>
+  <li><b>Thèmes</b> Nuit, Clair, Dracula ; <b>Exporter / Importer</b> des fichiers .alg ; sauvegarde automatique dans le navigateur.</li>
+  <li>Les erreurs de syntaxe ou d'exécution indiquent la ligne concernée. Une boucle infinie est interrompue automatiquement.</li></ul>
+  <h3>Couleurs de la syntaxe</h3><div class="leg">${leg.map(l=>`<span class="t-${l[0]}">${esc(l[1])}</span>`).join('')}</div>`;
+  for(const c in CATN){h+=`<h3>${CATN[c]}</h3><div class="grid">${D.filter(e=>e[1]===c).map(e=>`<div class="dcard"><b class="t-${c}">${esc(e[2])}</b><p>${esc(e[3])}</p><pre>${hl(e[4])}</pre></div>`).join('')}</div>`}
+  h+=`<h3>Programmes d'exemple</h3><div class="grid">${Object.keys(PROGS).map(k=>`<div class="dcard"><b>${esc(k)}</b><pre>${hl(PROGS[k].split('\n').slice(0,8).join('\n'))}\n…</pre><button data-p="${esc(k)}">Charger dans l'éditeur</button></div>`).join('')}</div>
+  <h3>À propos</h3><p>AlgoLab est une application réalisée par <b>EL HASSAK IMAD</b> : un studio local, sans serveur, pour écrire, tester et visualiser des algorithmes en pseudo-code français.</p><h3>Bon à savoir</h3><ul><li>Les noms de variables sont sensibles à la casse. Les indices (tables comme chaînes : <code>mot[i]</code>) commencent à 1 ; on peut lire un caractère mais pas le modifier.</li><li>Commentaire : <code>// texte</code>. Tables à deux dimensions : <code>m[i][j]</code>.</li></ul>`;
+  return h;
+}
+$('doc').onclick=()=>{$('dbody').innerHTML=docHTML();$('dlg').showModal()};
+$('dclose').onclick=()=>$('dlg').close();
+$('dbody').onclick=e=>{const p=e.target.dataset&&e.target.dataset.p;if(p){setCode(PROGS[p]);$('dlg').close()}};
+$('dlg').onclick=e=>{if(e.target===$('dlg'))$('dlg').close()};
+
+/* ---------- Démarrage ---------- */
+measure();
+let init=PROGS['Tri à bulles'];try{init=localStorage.getItem('algolab')||init}catch(e){}
+setCode(init);
+addEventListener('resize',()=>{measure();sync()});
+</script>
+</body>
+</html>
