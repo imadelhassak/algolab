@@ -4,7 +4,7 @@
 
 A local, serverless web app to write, run and visualize algorithms in French pseudo-code. It is a single HTML file: no installation and no server.
 
-🔗 **Live demo:** https://YOUR-USERNAME.github.io/algolab/
+🔗 **Live demo:** https://imadelhassak.github.io/algolab/
 
 Made by **EL HASSAK IMAD**.
 
